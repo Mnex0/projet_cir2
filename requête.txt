@@ -1,3 +1,4 @@
-INSERT INTO `installation` VALUES ([i][0],[i][4],[i][7],[i][10],[i][11],[i][12],[i][13],[i][14],[i][15],[i][17],[i][18],[i][19],[i][6],[i][9],[i][5],[i][8],[i][16],[i][21],[i][2],[i][3])
+INSERT INTO `installation` VALUES (temp[0][1:-1],temp[4][1:-1],temp[7][1:-1],temp[10[1:-1]],temp[11[1:-1]],temp[12[1:-1]],temp[13[1:-1]],temp[14[1:-1]],temp[15[1:-1]],temp[17[1:-1]],temp[18[1:-1]],temp[19[1:-1]],temp[6][1:-1],temp[9][1:-1],temp[5][1:-1],temp[8][1:-1],temp[16[1:-1]],temp[21[1:-1]],temp[2][1:-1],temp[3][1:-1])
 INSERT INTO `annee`(`num_annee`) VALUES ([i][2])
-
+INSERT INTO `departement`(`numero`, `nom_departement`, `nom_region`) VALUES ([21],[26],[25])
+INSERT INTO `installateur`(`nom`) VALUES ([16])

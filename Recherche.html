@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Recherche</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="Recherche.js" defer></script>
 </head>
 
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"> 
@@ -19,7 +20,7 @@
             </ul> 
         </header>
 <body>
-   <div class="container">
+   <div id ="form_recherche" class="container" >
     <h3>Formulaire de recherche :</h3>
     <br>
     <form>
@@ -44,19 +45,29 @@
                 <input type="text" class="form-control" id="departement" placeholder="Entrez votre Département" required autofocus>
         </div>
           <br>
-          <button type="submit" class="btn btn-success float-end">
+          <button type="submit" class="btn btn-success float-end" >
             <i class="fa fa-paper-plane"></i> Envoyer
           </button></form>
           <br>
     <h3>Résultat:</h3>
+        <div class="container text-center">
+        <div class="row row-cols-6">
+            <div class="col" >mois/annee</div>
+            <div class="col" >nb panneaux</div>
+            <div class="col" >Surface</div>
+            <div class="col ">Puissance crête</div>
+            <div class="col" >Location</div>
+            <div class="col" >Détails</div>
+        </div>
+    </div>
     <div class="container text-center">
         <div class="row row-cols-6">
-            <div class="col">mois/annee</div>
-            <div class="col">nb panneaux</div>
-            <div class="col">Surface</div>
-            <div class="col">Puissance crête</div>
-            <div class="col">Location</div>
-            <div class="col">Détails</div>
+            <div class="col" id="mois_annee">1</div>
+            <div class="col" id="nb_panneaux">2</div>
+            <div class="col" id="surface">3</div>
+            <div class="col" id="puissance_crete">4</div>
+            <div class="col" id="location">5</div>
+            <div class="col" id="details"><a href="Details.html" >Clique ici pour avoir les détails</a></div>
         </div>
     </div>
    </div>   

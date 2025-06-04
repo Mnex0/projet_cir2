@@ -180,7 +180,7 @@ def premierImport(liste: list, fichier_destination = "sql/premierImport.sql"):
 def main():
     liste = parse_csv("dataRessources/cleanData.csv")
     communes = parse_csv("dataRessources/communes-france-2024-limite.csv")
-    premierImport(liste)
+    #premierImport(liste)
     #import_installation(liste, communes, "sql/import_installation.sql")
 
 main()

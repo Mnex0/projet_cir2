@@ -61,9 +61,9 @@ CREATE TABLE marque_ondu(
 #------------------------------------------------------------
 
 CREATE TABLE modele_ondu(
-        modele_ondulateur Varchar (50) NOT NULL ,
-        marque            Varchar (50) NOT NULL
-	,CONSTRAINT modele_ondu_PK PRIMARY KEY (modele_ondulateur)
+        modele_onduleur Varchar (50) NOT NULL ,
+        marque          Varchar (50) NOT NULL
+	,CONSTRAINT modele_ondu_PK PRIMARY KEY (modele_onduleur)
 
 	,CONSTRAINT modele_ondu_marque_ondu_FK FOREIGN KEY (marque) REFERENCES marque_ondu(marque)
 )ENGINE=InnoDB;
@@ -94,7 +94,7 @@ CREATE TABLE region(
 #------------------------------------------------------------
 
 CREATE TABLE departement(
-        numero          Varchar (6) NOT NULL ,
+        numero          Varchar (10) NOT NULL ,
         nom_departement Varchar (50) NOT NULL ,
         nom_region      Varchar (50) NOT NULL
 	,CONSTRAINT departement_PK PRIMARY KEY (numero)
@@ -108,9 +108,9 @@ CREATE TABLE departement(
 #------------------------------------------------------------
 
 CREATE TABLE ville(
-        code_INSEE Varchar (6) NOT NULL ,
+        code_INSEE Varchar (10) NOT NULL ,
         localite   Varchar (50) NOT NULL ,
-        numero     Varchar (6) NOT NULL
+        numero     Varchar (10) NOT NULL
 	,CONSTRAINT ville_AK UNIQUE (localite)
 	,CONSTRAINT ville_PK PRIMARY KEY (code_INSEE)
 
@@ -130,21 +130,21 @@ CREATE TABLE installation(
         surface             Float NOT NULL ,
         pente               Int NOT NULL ,
         pente_optimum       Int NOT NULL ,
-        orientation         Varchar (5) NOT NULL ,
-        orientation_optimum Varchar (5) NOT NULL ,
+        orientation         Varchar (10) NOT NULL ,
+        orientation_optimum Varchar (10) NOT NULL ,
         production_pvgis    Int NOT NULL ,
         lat                 Float NOT NULL ,
         lon                 Float NOT NULL ,
         modele_panneau      Varchar (50) NOT NULL ,
-        modele_ondulateur   Varchar (50) NOT NULL ,
+        modele_onduleur     Varchar (50) NOT NULL ,
         nom                 Varchar (50) NOT NULL ,
-        code_INSEE          Varchar (6) NOT NULL ,
+        code_INSEE          Varchar (10) NOT NULL ,
         num_mois            Int NOT NULL ,
         num_annee           Int NOT NULL
 	,CONSTRAINT installation_PK PRIMARY KEY (id)
 
 	,CONSTRAINT installation_modele_pan_FK FOREIGN KEY (modele_panneau) REFERENCES modele_pan(modele_panneau)
-	,CONSTRAINT installation_modele_ondu0_FK FOREIGN KEY (modele_ondulateur) REFERENCES modele_ondu(modele_ondulateur)
+	,CONSTRAINT installation_modele_ondu0_FK FOREIGN KEY (modele_onduleur) REFERENCES modele_ondu(modele_onduleur)
 	,CONSTRAINT installation_installateur1_FK FOREIGN KEY (nom) REFERENCES installateur(nom)
 	,CONSTRAINT installation_ville2_FK FOREIGN KEY (code_INSEE) REFERENCES ville(code_INSEE)
 	,CONSTRAINT installation_mois3_FK FOREIGN KEY (num_mois) REFERENCES mois(num_mois)

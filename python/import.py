@@ -83,7 +83,7 @@ elif len(done)%10 == 0:
 
 def import_annee(liste: list, fichier_destination = "sql/import_annee.sql"):    
     with open(fichier_destination, "w") as fichier:
-        fichier.write("use projet_cir2\n-- _______________________ Annees __________________________--\n")
+        fichier.write("use projet_cir2;\n-- _______________________ Annees __________________________--\n")
         fichier.write("INSERT INTO `annee`(`num_annee`)\nVALUES")
         line = ""
         done = [""]

@@ -1,0 +1,9 @@
+Remarque post- rapport intermédiaire
+
+Bons points : 
+	Répartition - Commentaires des codes faits pendant le développement
+	MCD - Modèle et Marque pas dans une même table
+
+Points à améliorer :
+	MCD - Retirer la relation directe entre Marque et Installation
+	Rapport - Numérotation des pages

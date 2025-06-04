@@ -10,6 +10,7 @@
     <a href="Accueil.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> 
         <svg class="bi me-2" width="40" height="32" aria-hidden="true">
             <use xlink:href="#bootstrap"></use></svg> 
+            <img src="img/dessin-noir-blanc-panneau-solaire-eclat-soleil-dessus_1134231-2540.avif" alt="" height="80px" width="80px"> 
             <span class="fs-4">Joatthieu</span> </a> 
             <ul class="nav nav-pills"> 
                 <li class="nav-item"><a href="Accueil.html" class="nav-link active" aria-current="page">Accueil</a></li> 
@@ -19,9 +20,34 @@
         </header>
 <body>
    <div class="container">
-    <h3>Marque de l’onduleur</h3>
-    <h3>Marque des panneaux</h3>
-    <h3>Département</h3>
+    <h3>Formulaire de recherche :</h3>
+    <br>
+    <form>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Marque de l’onduleur ></span>
+            </div>
+                <input type="text" class="form-control" id="marque_onduleur" placeholder="Entrez votre marque de l’onduleur" required autofocus>
+        </div>
+        <br>
+    <div class="input-group">      
+        <div class="input-group-prepend">
+              <span class="input-group-text">Marque des panneaux ></span>
+            </div>
+            <input type="text" class="form-control" id="marque_panneaux" placeholder="Entrez votre marque de panneaux" required autofocus>
+          </div>
+          <br>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Département ></span>
+            </div>
+                <input type="text" class="form-control" id="departement" placeholder="Entrez votre Département" required autofocus>
+        </div>
+          <br>
+          <button type="submit" class="btn btn-success float-end">
+            <i class="fa fa-paper-plane"></i> Envoyer
+          </button></form>
+          <br>
     <h3>Résultat:</h3>
     <div class="container text-center">
         <div class="row row-cols-6">

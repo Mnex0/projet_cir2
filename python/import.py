@@ -1,4 +1,20 @@
-from claude import *
+import csv
+
+def parse_csv(file_path):
+    liste = []
+    try:
+        with open(file_path, 'r', encoding='utf-8', newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                liste.append(row)
+        return liste
+
+    except FileNotFoundError:
+        print(f"Erreur : Le fichier {file_path} n'a pas été trouvé.")
+        return []
+    except Exception as e:
+        print(f"Erreur lors de la lecture du fichier : {e}")
+        return []
 
 def calculer_nb_lignes(nom_fichier) :
     with open(nom_fichier,"r") as fichier:
@@ -73,11 +89,6 @@ def import_annee(liste: list, fichier_destination = "sql/import_annee.sql"):
                 fichier.write(line)
                 done.append(liste[i][3])
 
-def import_localisation(temp):
-    result = ""
-    for i in range(len(temp)):
-        if not str(temp[i][24]) in result:
-            result += "INSERT INTO `region` VALUES ('" + str(temp[i][25]) + "')\nINSERT INTO `departement` VALUES ('" + (str(temp[i][21]))[:2]+str(temp[i][26])+str(temp[i][25])+"')\nINSERT INTO `ville` VALUES ('" + str(temp[i][]) + "')\nINSERT INTO `ville` VALUES ('" + str(temp[i][24]) + "')\n"
 
 def import_mois(fichier_destination = "sql/import_mois.sql"):
     with open(fichier_destination, "a") as fichier:

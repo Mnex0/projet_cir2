@@ -68,5 +68,4 @@ def import_localisation(temp):
         if not str(temp[i][24]) in result:
             result += "INSERT INTO `region` VALUES ('" + str(temp[i][25]) + "')\nINSERT INTO `departement` VALUES ('" + (str(temp[i][21]))[:2]+str(temp[i][26])+str(temp[i][25])+"')\nINSERT INTO `ville` VALUES ('" + str(temp[i][]) + "')\nINSERT INTO `ville` VALUES ('" + str(temp[i][24]) + "')\n"
 
-
 import_installation("data.csv","sql2")

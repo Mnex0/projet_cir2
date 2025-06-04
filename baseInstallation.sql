@@ -24,48 +24,48 @@ CREATE TABLE annee(
 
 
 #------------------------------------------------------------
-# Table: panneau_marque
+# Table: marque_pan
 #------------------------------------------------------------
 
-CREATE TABLE panneau_marque(
+CREATE TABLE marque_pan(
         marque Varchar (50) NOT NULL
-	,CONSTRAINT panneau_marque_PK PRIMARY KEY (marque)
+	,CONSTRAINT marque_pan_PK PRIMARY KEY (marque)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: panneau_modele
+# Table: modele_pan
 #------------------------------------------------------------
 
-CREATE TABLE panneau_modele(
-        modele Varchar (50) NOT NULL ,
-        marque Varchar (50) NOT NULL
-	,CONSTRAINT panneau_modele_PK PRIMARY KEY (modele)
+CREATE TABLE modele_pan(
+        modele_panneau Varchar (50) NOT NULL ,
+        marque         Varchar (50) NOT NULL
+	,CONSTRAINT modele_pan_PK PRIMARY KEY (modele_panneau)
 
-	,CONSTRAINT panneau_modele_panneau_marque_FK FOREIGN KEY (marque) REFERENCES panneau_marque(marque)
+	,CONSTRAINT modele_pan_marque_pan_FK FOREIGN KEY (marque) REFERENCES marque_pan(marque)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: onduleur_marque
+# Table: marque_ondu
 #------------------------------------------------------------
 
-CREATE TABLE onduleur_marque(
+CREATE TABLE marque_ondu(
         marque Varchar (50) NOT NULL
-	,CONSTRAINT onduleur_marque_PK PRIMARY KEY (marque)
+	,CONSTRAINT marque_ondu_PK PRIMARY KEY (marque)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: onduleur_modele
+# Table: modele_ondu
 #------------------------------------------------------------
 
-CREATE TABLE onduleur_modele(
-        modele Varchar (50) NOT NULL ,
-        marque Varchar (50) NOT NULL
-	,CONSTRAINT onduleur_modele_PK PRIMARY KEY (modele)
+CREATE TABLE modele_ondu(
+        modele_ondulateur Varchar (50) NOT NULL ,
+        marque            Varchar (50) NOT NULL
+	,CONSTRAINT modele_ondu_PK PRIMARY KEY (modele_ondulateur)
 
-	,CONSTRAINT onduleur_modele_onduleur_marque_FK FOREIGN KEY (marque) REFERENCES onduleur_marque(marque)
+	,CONSTRAINT modele_ondu_marque_ondu_FK FOREIGN KEY (marque) REFERENCES marque_ondu(marque)
 )ENGINE=InnoDB;
 
 
@@ -108,11 +108,11 @@ CREATE TABLE departement(
 #------------------------------------------------------------
 
 CREATE TABLE ville(
-        codeINSEE Varchar (6) NOT NULL ,
-        localite  Varchar (50) NOT NULL ,
-        numero    Varchar (6) NOT NULL
+        code_INSEE Varchar (6) NOT NULL ,
+        localite   Varchar (50) NOT NULL ,
+        numero     Varchar (6) NOT NULL
 	,CONSTRAINT ville_AK UNIQUE (localite)
-	,CONSTRAINT ville_PK PRIMARY KEY (codeINSEE)
+	,CONSTRAINT ville_PK PRIMARY KEY (code_INSEE)
 
 	,CONSTRAINT ville_departement_FK FOREIGN KEY (numero) REFERENCES departement(numero)
 )ENGINE=InnoDB;
@@ -123,30 +123,30 @@ CREATE TABLE ville(
 #------------------------------------------------------------
 
 CREATE TABLE installation(
-        id                     Int  Auto_increment  NOT NULL ,
-        nb_panneau             Int NOT NULL ,
-        nb_onduleur            Int NOT NULL ,
-        puissance_crete        Int NOT NULL ,
-        surface                Float NOT NULL ,
-        pente                  Int NOT NULL ,
-        pente_optimum          Int NOT NULL ,
-        orientation            Varchar (5) NOT NULL ,
-        orientation_optimum    Varchar (5) NOT NULL ,
-        production_pvgis       Int NOT NULL ,
-        lat                    Float NOT NULL ,
-        lon                    Float NOT NULL ,
-        modele                 Varchar (50) NOT NULL ,
-        modele_onduleur_modele Varchar (50) NOT NULL ,
-        nom                    Varchar (50) NOT NULL ,
-        codeINSEE              Varchar (6) NOT NULL ,
-        num_mois               Int NOT NULL ,
-        num_annee              Int NOT NULL
+        id                  Int  Auto_increment  NOT NULL ,
+        nb_panneau          Int NOT NULL ,
+        nb_onduleur         Int NOT NULL ,
+        puissance_crete     Int NOT NULL ,
+        surface             Float NOT NULL ,
+        pente               Int NOT NULL ,
+        pente_optimum       Int NOT NULL ,
+        orientation         Varchar (5) NOT NULL ,
+        orientation_optimum Varchar (5) NOT NULL ,
+        production_pvgis    Int NOT NULL ,
+        lat                 Float NOT NULL ,
+        lon                 Float NOT NULL ,
+        modele_panneau      Varchar (50) NOT NULL ,
+        modele_ondulateur   Varchar (50) NOT NULL ,
+        nom                 Varchar (50) NOT NULL ,
+        code_INSEE          Varchar (6) NOT NULL ,
+        num_mois            Int NOT NULL ,
+        num_annee           Int NOT NULL
 	,CONSTRAINT installation_PK PRIMARY KEY (id)
 
-	,CONSTRAINT installation_panneau_modele_FK FOREIGN KEY (modele) REFERENCES panneau_modele(modele)
-	,CONSTRAINT installation_onduleur_modele0_FK FOREIGN KEY (modele_onduleur_modele) REFERENCES onduleur_modele(modele)
+	,CONSTRAINT installation_modele_pan_FK FOREIGN KEY (modele_panneau) REFERENCES modele_pan(modele_panneau)
+	,CONSTRAINT installation_modele_ondu0_FK FOREIGN KEY (modele_ondulateur) REFERENCES modele_ondu(modele_ondulateur)
 	,CONSTRAINT installation_installateur1_FK FOREIGN KEY (nom) REFERENCES installateur(nom)
-	,CONSTRAINT installation_ville2_FK FOREIGN KEY (codeINSEE) REFERENCES ville(codeINSEE)
+	,CONSTRAINT installation_ville2_FK FOREIGN KEY (code_INSEE) REFERENCES ville(code_INSEE)
 	,CONSTRAINT installation_mois3_FK FOREIGN KEY (num_mois) REFERENCES mois(num_mois)
 	,CONSTRAINT installation_annee4_FK FOREIGN KEY (num_annee) REFERENCES annee(num_annee)
 )ENGINE=InnoDB;

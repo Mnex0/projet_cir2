@@ -25,25 +25,31 @@
     <br>
     <form>
         <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Marque de l’onduleur ></span>
-            </div>
-                <input type="text" class="form-control" id="marque_onduleur" placeholder="Entrez votre marque de l’onduleur" required autofocus>
+                    <div class="input-group-prepend">
+            <span class="input-group-text">Marque de l’onduleur ></span>
         </div>
+            <select id="departement_select">
+                <option value="0">--Marque de l’onduleur--</option>
+            </select>
+    </div> 
         <br>
     <div class="input-group">      
-        <div class="input-group-prepend">
-              <span class="input-group-text">Marque des panneaux ></span>
-            </div>
-            <input type="text" class="form-control" id="marque_panneaux" placeholder="Entrez votre marque de panneaux" required autofocus>
-          </div>
+                <div class="input-group-prepend">
+            <span class="input-group-text">Marque des panneaux ></span>
+        </div>
+            <select id="departement_select">
+                <option value="0">--Marque des panneaux--</option>
+            </select>
+    </div> 
           <br>
     <div class="input-group">
         <div class="input-group-prepend">
             <span class="input-group-text">Département ></span>
-            </div>
-                <input type="text" class="form-control" id="departement" placeholder="Entrez votre Département" required autofocus>
         </div>
+            <select id="departement_select">
+                <option value="0">--Département--</option>
+            </select>
+    </div>        
           <br>
           <button type="submit" class="btn btn-success float-end" >
             <i class="fa fa-paper-plane"></i> Envoyer

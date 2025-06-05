@@ -64,9 +64,9 @@ def import_installation(data: list, communes: list, fichier_destination = "impor
             ('NULL' if data[i][2]=='' else int(data[i][2])),        # num_mois
             ('NULL' if data[i][3]=='' else int(data[i][3]))         # num_annee
         ]
-        if not(temp[1:] in unique): # On vérifie si les données privées de l'id sont les mêmes pour ne pas ajouter les doublons
-            res.append(temp) # On ajoute dans la liste avec l'id
-            unique.append(temp[1:]) # On ajoute sans l'id car, lui, diffère toujours et ne nous permet pas de trier les doublons
+        if not(temp[1:] in unique):                                 # On vérifie si les données privées de l'id sont les mêmes pour ne pas ajouter les doublons
+            res.append(temp)                                        # On ajoute dans la liste avec l'id
+            unique.append(temp[1:])                                 # On ajoute sans l'id car, lui, diffère toujours et ne nous permet pas de trier les doublons
     print(unique)
     with open(fichier_destination, "w") as fichier:
         fichier.write("-- _______________________ Installations __________________________--\n")
@@ -82,67 +82,75 @@ elif len(done)%10 == 0:
 """
 
 def import_annee(liste: list, fichier_destination = "sql/import_annee.sql"):    
-    with open(fichier_destination, "w") as fichier:
+    with open(fichier_destination, "w", encoding="utf-8") as fichier:           # En utf-8 pour éviter tout problème d'accents
         fichier.write("use projet_cir2;\n-- _______________________ Annees __________________________--\n")
         fichier.write("INSERT INTO `annee`(`num_annee`)\nVALUES")
         line = ""
         done = [""]
         for i in range(1, len(liste)):
-            if not(liste[i][3] in done): # liste[i][3] est l'annee de l'installation
-                line = f",\n    ({liste[i][3]})"
+            if not(liste[i][3] in done):                # liste[i][3] est l'annee de l'installation
+                line = f", ({liste[i][3]})"
                 if len(done) == 1:
-                    line = f"\n    ({liste[i][3]})" # Pas de début avec ","
+                    line = f"\n    ({liste[i][3]})"     # Pas de début avec ","
+                elif len(done)%10 == 0:                 # Pour éviter les gros blocs sur une ligne, on ajoute un "\n"
+                    line = f",\n    ({liste[i][3]})"    # Ici on utilise la valeur sans "" car il s'agit d'un int, à l'avenir on utilisera f'("VALEUR")' pour éviter les problèmes d'apostrophes
                 fichier.write(line)
                 done.append(liste[i][3])
         fichier.write(";\n")
 
 def import_installateur(liste: list, fichier_destination = "sql/import_installateur.sql"):
-    with open(fichier_destination, "a") as fichier:
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
         fichier.write("-- _______________________ Installateurs __________________________--\n")
         fichier.write("INSERT INTO `installateur`(`nom`)\nVALUES")
         line = ""
         done = [""]
         for i in range(1, len(liste)):
-            if not((liste[i][16]).lower() in done): # liste[i][16] est le nom de l'installateur, lower permet de vérifier les doublons indistinctement des majuscules
-                line = f',\n    ("{liste[i][16]}")'
+            if not((liste[i][16]).lower() in done):     # liste[i][16] est le nom de l'installateure et lower permet de vérifier les doublons indistinctement des majuscules
+                line = f', ("{liste[i][16]}")'
                 if len(done) == 1:
                     line = f'\n    ("{liste[i][16]}")'
+                elif len(done)%10 == 0:
+                    line = f',\n    ("{liste[i][16]}")'
                 fichier.write(line)
                 done.append((liste[i][16]).lower())
         fichier.write(";\n")
 
 def import_marque_ondu(liste: list, fichier_destination = "sql/import_marque_ondu.sql"):
-    with open(fichier_destination, "a") as fichier:
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
         fichier.write("-- _______________________ Marques Onduleurs __________________________--\n")
         fichier.write("INSERT INTO `marque_ondu`(`marque`)\nVALUES")
         line = ""
         done = [""]
         for i in range(1, len(liste)):
             if not((liste[i][8]).lower() in done): # liste[i][8] est la marque d'onduleur
-                line = f',\n    ("{liste[i][8]}")'
+                line = f', ("{liste[i][8]}")'
                 if len(done) == 1:
                     line = f'\n    ("{liste[i][8]}")'
+                elif len(done)%10 == 0: # Pour éviter les gros blocs sur une ligne, on ajoute un "\n"
+                    line = f',\n    ("{liste[i][8]}")'
                 fichier.write(line)
                 done.append((liste[i][8]).lower())
         fichier.write(";\n")
 
 def import_marque_pan(liste: list, fichier_destination = "sql/import_marque_pan.sql"):
-    with open(fichier_destination, "a") as fichier:
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
         fichier.write("-- _______________________ Marques Panneaux __________________________--\n")
         fichier.write("INSERT INTO `marque_pan`(`marque`)\nVALUES")
         line = ""
         done = [""]
         for i in range(1, len(liste)):
             if not((liste[i][5]).lower() in done): # liste[i][5] est la marque de panneau
-                line = f',\n    ("{liste[i][5]}")'
+                line = f', ("{liste[i][5]}")'
                 if len(done) == 1:
                     line = f'\n    ("{liste[i][5]}")'
+                elif len(done)%10 == 0: # Pour éviter les gros blocs sur une ligne, on ajoute un "\n"
+                    line = f',\n    ("{liste[i][5]}")'
                 fichier.write(line)
                 done.append((liste[i][5]).lower())
         fichier.write(";\n")
 
 def import_mois(fichier_destination = "sql/import_mois.sql"):
-    with open(fichier_destination, "a") as fichier:
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
         fichier.write("-- _______________________ Mois __________________________--\n")
         fichier.write("INSERT INTO `mois`(`num_mois`)\nVALUES\n   ")
         line = ""
@@ -153,16 +161,18 @@ def import_mois(fichier_destination = "sql/import_mois.sql"):
 
 
 def import_region(liste: list, fichier_destination = "sql/import_region.sql"): # Attention, toujours revérifier s'il reste des caractères étranges dans le sql et les enlever
-    with open(fichier_destination, "a") as fichier:
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
         fichier.write("-- _______________________ Marques Regions __________________________--\n")
         fichier.write("INSERT INTO `region`(`nom_region`)\nVALUES")
         line = ""
         done = [""]
         for i in range(1, len(liste)):
             if not((liste[i][25]).lower() in done): # liste[i][25] est la région (administrative area lvl 1)
-                line = f',\n    ("{liste[i][25]}")'
+                line = f', ("{liste[i][25]}")'
                 if len(done) == 1:
                     line = f'\n    ("{liste[i][25]}")'
+                elif len(done)%5 == 0:
+                    line = f',\n    ("{liste[i][25]}")'
                 fichier.write(line)
                 done.append((liste[i][25]).lower())
         fichier.write(";\n")
@@ -180,7 +190,7 @@ def premierImport(liste: list, fichier_destination = "sql/premierImport.sql"):
 def main():
     liste = parse_csv("dataRessources/cleanData.csv")
     communes = parse_csv("dataRessources/communes-france-2024-limite.csv")
-    #premierImport(liste)
+    premierImport(liste)
     #import_installation(liste, communes, "sql/import_installation.sql")
 
 main()

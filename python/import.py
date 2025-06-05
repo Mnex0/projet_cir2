@@ -22,10 +22,19 @@ def calculer_nb_lignes(nom_fichier) :
     return len(l)
 
 def associe_INSEE(communes: list, ville, code_postal):
+    if code_postal == 'NULL':
+        return 'NULL'
     for i in range(len(communes)):
         if (communes[i][6] == code_postal and communes[i][1] == ville):
             return communes[i][0]
     return f"p{code_postal}"        # Renvoie un code insee de format "p" + Code_postal pour tout de même stocker l'information postale
+
+def nuller_data(data: list):
+    for i in range(len(data)):
+        for j in range(len(data[i])):
+            if data[i][j] == '':
+                data[i][j] = 'NULL'
+    return data
 
 # ___________________________ IMPORTS __________________________________________________________________________________________________________
 """
@@ -144,9 +153,117 @@ Ici se trouvent la définition des fonction appelées lors de la création de l'
 Ce sont celles qui crééent les données des tables ne contenant aucune clés étrangères.
 """
 
-def import_departement(data: list, communes: list, fichier_destination = "import_departement.sql"):
+def import_departement(data: list, fichier_destination = "import_departement.sql"):
     with open(fichier_destination, "w", encoding="utf-8") as fichier:           # En utf-8 pour éviter tout problème d'accents
         fichier.write("use projet_cir2;\n-- _______________________ Departements __________________________--\n")
+        fichier.write("INSERT INTO `departement`(`numero`, `nom_departement`, `nom_region`)\nVALUES\n")
+        line = ""
+        done = []
+        for i in range(1, len(data)):
+            if not(str(data[i][21])[:2].lower() in done):
+                if len(done) == 1:
+                    line = f'\n    '
+                elif len(done)%5 == 0:
+                    line = f',\n    '
+                else:                           # line += f'({str(data[i][21])[:2]}, "{data[i][26]}", "{data[i][25]}")'
+                    line = f', '
+                    
+                # Numéro département
+                if str(data[i][21]) == 'NULL':
+                    line += f'(NULL, '
+                else:
+                    line += f'({str(data[i][21])[:2]}, ' # On ne prend que les deux premiers chiffres
+                
+                # Nom département
+                if data[i][26] == 'NULL':
+                    line += f'NULL, '
+                else:
+                    line += f'"{data[i][26]}", '
+                    
+                # Nom région
+                if data[i][25] == 'NULL':
+                    line += f'NULL)'
+                else:
+                    line += f'"{data[i][25]}")'
+                
+                fichier.write(line)
+                done.append(str(data[i][21])[:2].lower())
+        fichier.write(";\n")
+
+def import_modele_ondu(data: list, fichier_destination = "import_modele_ondu.sql"):
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
+        fichier.write("-- _______________________ Modeles onduleurs __________________________--\n")
+        fichier.write("INSERT INTO `modele_ondu`(`modele_onduleur`, `marque`)\nVALUES")
+        line = ""
+        done = [""]
+        for i in range(1, len(data)):
+            if not((data[i][9].lower(), data[i][8].lower()) in done):
+                if len(done) == 1:
+                    line = f'\n    '
+                elif len(done)%5 == 0:
+                    line = f',\n    '
+                else:
+                    line = f', '
+                line += f'("{data[i][9]}", "{data[i][8]}")'
+                fichier.write(line)
+                done.append((data[i][9].lower(), data[i][8].lower()))
+        fichier.write(";\n")
+
+def import_modele_pan(data: list, fichier_destination = "import_modele_pan.sql"):
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
+        fichier.write("-- _______________________ Modeles panneaux __________________________--\n")
+        fichier.write("INSERT INTO `modele_pan`(`modele_panneau`, `marque`)\nVALUES")
+        line = ""
+        done = [""]
+        for i in range(1, len(data)):
+            if not((data[i][6].lower(), data[i][5].lower()) in done):
+                if len(done) == 1:
+                    line = f'\n    '
+                elif len(done)%5 == 0:
+                    line = f',\n    '
+                else:
+                    line = f', '
+                line += f'("{data[i][6]}", "{data[i][5]}")'
+                fichier.write(line)
+                done.append((data[i][6].lower(), data[i][5].lower()))
+        fichier.write(";\n")
+
+def import_ville(data: list, communes: list, fichier_destination = "import_ville.sql"):
+    with open(fichier_destination, "a", encoding="utf-8") as fichier:
+        fichier.write("-- _______________________ Villes __________________________--\n")
+        fichier.write("INSERT INTO `ville`(`code_INSEE`, `localite`, `numero`)\nVALUES")
+        line = ""
+        done = [""]
+        for i in range(1, len(data)):
+            insee = associe_INSEE(communes, data[i][24], data[i][21])   # respectivement la localité et le code postal
+            if not((insee.lower(), data[i][24].lower(), data[i][21]) in done):
+                if len(done) == 1:
+                    line = f'\n    '
+                elif len(done)%5 == 0:
+                    line = f',\n    '
+                else:
+                    line = f', '
+
+                # Insee
+                if insee == 'NULL':
+                    line += f'(NULL, '
+                else:
+                    line += f'({insee}, '
+                
+                # Localité
+                if data[i][24] == 'NULL':
+                    line += f'NULL, '
+                else:
+                    line += f'"{data[i][24]}", '
+                    
+                # Numéro département
+                if data[i][21] == 'NULL':
+                    line += f'NULL)'
+                else:
+                    line += f'{str(data[i][21])[:2]})'
+                fichier.write(line)
+                done.append((insee.lower(), data[i][24].lower(), data[i][21])) # pour la dernière on prend le numéro entier, on fait au plus simple
+        fichier.write(";\n")
 
 # --------------------------- Import final --------------------------------------------------------------------------------------
 
@@ -197,13 +314,22 @@ def premier_import(data: list, fichier_destination = "sql/premier_import.sql"):
     import_region(data, fichier_destination)
     print("Premier import SQL généré avec succès !\n")
 
-def import_intermediaire(data: list, fichier_destination = "sql/premier_import.sql"):
+def import_intermediaire(data: list, communes: list, fichier_destination = "sql/import_intermediaire.sql"):
+    import_departement(data, fichier_destination)
+    import_modele_ondu(data, fichier_destination)
+    import_modele_pan(data, fichier_destination)
+    import_ville(data, communes, fichier_destination)
     print("Import intermédiaire SQL généré avec succès !\n")
 
 def main():
-    data = parse_csv("dataRessources/cleanData.csv")
+    data = nuller_data(parse_csv("dataRessources/cleanData.csv"))
     communes = parse_csv("dataRessources/communes-france-2024-limite.csv")
-    premier_import(data)
+    #premier_import(data)
+    #import_departement(data)
+    #import_modele_ondu(data)
+    #import_modele_pan(data)
+    #import_ville(data, communes)
+    import_intermediaire(data, communes)
     #import_final_installation(data, communes, "sql/import_final_installation.sql")
 
 main()

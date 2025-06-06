@@ -59,19 +59,19 @@ async function chart2() {
   }
 }
 
-async function stat1() {
+async function statEnr() {
 
   /* Demande et affiche nombre d’enregistrement en base  */
 
-  document.getElementById('stat1').innerHTML += 26432;
+  document.getElementById('statEnr').innerHTML += 26432;
 
 
-  /*const response = await fetch("php/request.php/stat1");
+  /*const response = await fetch("php/request.php/statEnr");
     if (!response.ok)
   displayErrors(response.status);
 else{
 const res=await response.json();
-  document.getElementById('stat1').innerHTML+=stat1;
+  document.getElementById('statEnr').innerHTML+=statEnr;
 }*/
 }
 
@@ -103,7 +103,7 @@ async function stat3() {
   displayErrors(response.status);
 else{
 const res=await response.json();
-  document.getElementById('stat1').innerHTML+=stat3;
+  document.getElementById('statEnr').innerHTML+=stat3;
 }*/
 }
 
@@ -119,7 +119,7 @@ async function stat4() {
   displayErrors(response.status);
 else{
 const res=await response.json();
-  document.getElementById('stat1').innerHTML+=stat4;
+  document.getElementById('statEnr').innerHTML+=stat4;
 }*/
 }
 
@@ -190,7 +190,7 @@ new Chart(ctx2, {
 });
 
 
-stat1();
+statEnr();
 stat2();
 stat3();
 stat4();

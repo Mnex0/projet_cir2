@@ -46,7 +46,7 @@ async function affiche_ping(lat, long) {
     /* affiche un marqueur a une lat et long donnée */
     map.setView([lat, long], 10);
     var marker = L.marker([lat, long]).addTo(map);
-    res = ["Rennes", 1500,]
+    let res = ["Rennes", 1500,];
     marker.bindPopup("<p>Localité : " + res[0] + "</p><p>Puissance : " + res[1] + "</p><a href='Details.html'>Détails de l'installation</a>");//A modifier
 
     /*const response = await fetch('php/request.php/ping');

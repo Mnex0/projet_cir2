@@ -1,12 +1,29 @@
 
 
 document.getElementById('form_recherche').addEventListener('submit', get_form);
+document.getElementById("res").style.display = "none";
+
+async function select_recherche() {
+    const response = await fetch("php/request.php/selectRecherche");
+    if (!response.ok)
+       displayErrors(response.status);
+    else{
+        res=await response.json();
+        for (let index = 0; index < res.length; index++) {
+           document.getElementById("marque_ondu_select").innerHTML+= "<option value='"+index+"'>"+res[index][0]+"</option>";
+           document.getElementById("marque_pan_select").innerHTML+= "<option value='"+index+"'>"+res[index][1]+"</option>";
+           document.getElementById("departement_select").innerHTML+= "<option value='"+index+"'>"+res[index][2]+"</option>";
+           
+        }
+}
+}
 
 
 
 async function get_form(event) {
-    /* Faire la requette pour appeler la fonction affiche_recherche avec les bon parametres   */
+    /*    */
     event.preventDefault();
+    document.getElementById("res").style.display = "block";
     let marque_onduleur = document.getElementById('marque_onduleur').value;
     let marque_panneaux = document.getElementById('marque_panneaux').value;
     let departement = document.getElementById('departement').value;
@@ -17,30 +34,25 @@ async function get_form(event) {
     /*
 
 
-    REQUETE A FAIRE 
-
-    const response = await fetch('php/request.php/tweets/', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: 'login=' + login + '&text=' + value});
+    const response = await fetch('php/request.php/tweets/')
     */
-    /*if (!response.ok)
+    if (!response.ok)
         displayErrors(response.status);
     else
      {
-       affiche_recherche(mois_annee,nb_panneaux,surface,puissance,loc); 
-  }*/
+       res=await response.json();
+    for (let index = 0; index < res.length; index++) {
+        affiche_recherche(mois_annee,nb_panneaux,surface,puissance,loc);
+        
+    } 
+  }
     
 }
 
 
 function affiche_recherche(mois_annee,nb_panneaux,surface,puissance,loc){
     /* affiche les paramètres dans la page html*/
-    document.getElementById('mois_annee').innerHTML=mois_annee;
-    document.getElementById('nb_panneaux').innerHTML=nb_panneaux;
-    document.getElementById('surface').innerHTML=surface;
-    document.getElementById('puissance_crete').innerHTML=puissance;
-    document.getElementById('location').innerHTML=loc;    
+    document.getElementById("res_recherche").innerHTML+="<div class='row row-cols-6'> <div class='col' id='mois_annee'>"+mois_annee+"</div><div class='col' id='nb_panneaux'>"+nb_panneaux+"</div><div class='col' id='surface'>"+surface+"</div><div class='col' id='puissance_crete'>"+puissance+"</div><div class='col' id='location'>"+loc+"</div><div class='col' id='details'><a href='Details.html' >Clique ici pour avoir les détails</a></div></div>"
 
 
 }

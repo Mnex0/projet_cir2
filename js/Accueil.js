@@ -31,6 +31,36 @@ async function chart1() {
     }
 }
 
+async function chart2() {
+    /* Demande et affiche un graphique avec le  nombre d’installation par région  */
+    const response = await fetch("php/request.php/chart2");
+  if (!response.ok)
+    displayErrors(response.status);
+  else
+    {
+        res=await response.json();
+        const ctx2 = document.getElementById('myChart2');
+        new Chart(ctx1, {
+        type: 'bar',
+        data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],//a changer
+        datasets: [{
+        label: 'Nombre d’installations',
+        data: [12, 19, 3, 5, 2, 3],//a changer
+        borderWidth: 1
+        }]
+        },
+       options: {
+        scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+        
+    }
+}
 
 async function stat1() {
 
@@ -43,6 +73,7 @@ async function stat1() {
       if (!response.ok)
     displayErrors(response.status);
   else{
+  const res=await response.json();
     document.getElementById('stat1').innerHTML+=stat1;
 }*/
 }
@@ -58,6 +89,7 @@ async function stat2() {
       if (!response.ok)
     displayErrors(response.status);
   else{
+  const res=await response.json();
     document.getElementById('stat2').innerHTML+=stat2;
 }*/
 }
@@ -73,6 +105,7 @@ async function stat3() {
       if (!response.ok)
     displayErrors(response.status);
   else{
+  const res=await response.json();
     document.getElementById('stat1').innerHTML+=stat3;
 }*/
 }
@@ -88,6 +121,7 @@ async function stat4() {
       if (!response.ok)
     displayErrors(response.status);
   else{
+  const res=await response.json();
     document.getElementById('stat1').innerHTML+=stat4;
 }*/
 }

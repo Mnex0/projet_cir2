@@ -1,7 +1,8 @@
 <?php
- require_once('constants.php');
+require_once('constants.php');
 
 function dbConnect()
+/* Conexion a la BDD */
  {
    try
    {
@@ -18,17 +19,17 @@ function dbConnect()
  }
   
  
-function dbRequestPos($db)
+function dbRequestPos($db,$annee,$dep)
+/*Request pour la carte  */
 {
-
-    try
+  try
     {
-      $request = 'SELECT l FROM tweets';
-      if($login != '')
-        $request .= ' WHERE login=:login';
+      $request = 'SELECT lat,lon FROM installation';
+      $request .= ' WHERE annee=:annee';
+      $request .= ' AND WHERE dep=:dep ';
       $statement = $db->prepare($request);
-      if($login != '')
-        $statement->bindParam(':login', $login, PDO::PARAM_STR,20);
+      $statement->bindParam(':annee', $annee, PDO::PARAM_STR,20);
+      $statement->bindParam(':dep', $dep, PDO::PARAM_STR,20);
       $statement->execute();
       $result = $statement->fetchALl(PDO::FETCH_ASSOC);
     }
@@ -38,6 +39,93 @@ function dbRequestPos($db)
       return false;
     }
     return $result;
+}
+
+
+
+function dbRequestChart1($db){
+  /*Request pour le premier graphique*/ 
+try{
+   $request = 'SELECT COUNT(*),annee FROM installation ';
+   $statement = $db->prepare($request);
+   $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+       }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    return $result;
+
+
+}
+
+function dbRequestStat1($db){
+   /*Request pour le  nombre d’enregistrement en base*/ 
+  try{
+   $request = 'SELECT COUNT(*)FROM installation ';
+   $statement = $db->prepare($request);
+   $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+       }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    return $result;
+
+
+}
+
+function dbRequestStat2($db){
+  /* Request pour le Nombre d’installateurs */
+  try{
+   $request = 'SELECT nom FROM installateur ';
+   $statement = $db->prepare($request);
+   $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+       }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    return $result;
+
+
+}
+
+function dbRequestStat3($db){
+  /* Request pour le Nombre de marques d’onduleurs */
+  try{
+   $request = 'SELECT marque FROM marque_ondu ';
+   $statement = $db->prepare($request);
+   $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+       }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    return $result;
+
+
+}
+
+function dbRequestStat4($db){
+  /*Request pour le Nombre de marques de panneaux solaires : */
+  try{
+   $request = 'SELECT marque FROM marque_pan ';
+   $statement = $db->prepare($request);
+   $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+       }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    return $result;
+
+
 }
 
 ?>

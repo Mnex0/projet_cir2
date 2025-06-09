@@ -153,12 +153,14 @@ Ici se trouvent la définition des fonction appelées lors de la création de l'
 Ce sont celles qui crééent les données des tables ne contenant aucune clés étrangères.
 """
 
-def import_departement(data: list, commune: list, fichier_destination = "import_departement.sql"):
+def import_departement_et_ville(data: list, communes: list, fichier_destination = "import_departement.sql"):
     with open(fichier_destination, "w", encoding="utf-8") as fichier:           # En utf-8 pour éviter tout problème d'accents
         fichier.write("use projet_cir2;\n-- _______________________ Departements __________________________--\n")
         fichier.write("INSERT INTO `departement`(`id_dep`, `numero`, `nom_departement`, `nom_region`)\nVALUES\n")
         line = ""
         doneDep = [""]
+        deps = []
+        countId = 0
         for i in range(1, len(data)):
             if not((str(data[i][21])[:2].lower(), data[i][26].lower(), data[i][25].lower()) in doneDep):
                 if len(doneDep)==1:
@@ -167,12 +169,13 @@ def import_departement(data: list, commune: list, fichier_destination = "import_
                     line = f',\n    '
                 else:                           # line += f'({str(data[i][21])[:2]}, "{data[i][26]}", "{data[i][25]}")'
                     line = f', '
-                    
+                
+                
                 # Numéro département
                 if str(data[i][21]) == 'NULL':
-                    line += f'({len(doneDep)}, NULL, '
+                    line += f'({countId}, NULL, '
                 else:
-                    line += f'({len(doneDep)}, {str(data[i][21])[:2]}, ' # On ne prend que les deux premiers chiffres
+                    line += f'({countId}, {str(data[i][21])[:2]}, ' # On ne prend que les deux premiers chiffres
                 
                 # Nom département
                 if data[i][26] == 'NULL':
@@ -188,15 +191,20 @@ def import_departement(data: list, commune: list, fichier_destination = "import_
                 
                 fichier.write(line)
                 doneDep.append((str(data[i][21])[:2].lower(), data[i][26].lower(), data[i][25].lower()))
+                deps.append((countId, str(data[i][21])[:2].lower(), data[i][26].lower(), data[i][25].lower()))
+                countId += 1
         fichier.write(";\n")
-        
     
     with open(fichier_destination, "a", encoding="utf-8") as fichier:
         fichier.write("-- _______________________ Villes __________________________--\n")
         fichier.write("INSERT INTO `ville`(`code_INSEE`, `localite`, `id_dep`)\nVALUES\n")
         line = ""
         done = [""]
+        iddep = "NULL"
         for i in range(1, len(data)):
+            for j in deps:
+                if j[1] == data[i][21][:2]: # On check le numéro du département et les deux premiers chiffres du code postal
+                    iddep = j[0]
             insee = associe_INSEE(communes, data[i][24], data[i][21])   # respectivement la localité et le code postal
             if not((insee.lower(), data[i][24].lower(), data[i][21]) in done):
                 if len(done)==1:
@@ -219,11 +227,14 @@ def import_departement(data: list, commune: list, fichier_destination = "import_
                     line += f'"{data[i][24]}", '
                     
                 # id_dep
+                if data[i][21] == 'NULL':
+                    line += f'NULL)'
+                else:
+                    line += f'{iddep})'
                 line += f'{len(done)})'
                 fichier.write(line)
                 done.append((insee.lower(), data[i][24].lower(), data[i][21])) # pour la dernière on prend le numéro entier, on fait au plus simple
         fichier.write(";\n")
-        
 
 def import_modele_ondu(data: list, fichier_destination = "import_modele_ondu.sql"):
     with open(fichier_destination, "a", encoding="utf-8") as fichier:

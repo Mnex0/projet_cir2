@@ -133,7 +133,7 @@ async function stat4() {
     displayErrors(response.status);
   else{
     const res=await response.json();
-    document.getElementById('statEnr').innerHTML+=res[0]['COUNT(*)'];
+    document.getElementById('stat4').innerHTML+=res[0]['COUNT(*)'];
   }
 }
 

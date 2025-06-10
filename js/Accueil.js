@@ -2,126 +2,122 @@
 
 async function chart1() {
 
-  /* Demande et affiche un graphique avec le  nombre d’installations par années  */
+  /* Demande et affiche un graphique avec le  nombre d'installations par années  */
 
   const response = await fetch("php/request.php/chart1");
-  const res=[];
-  if (!response.ok)
-    displayErrors(response.status);
-  else {
-    res = await response.json();
+  if (!response.ok) {
+    displayErrors(response.status)
+    return false;
+  }
+  const res = await response.json();
+  let label = [];
+  let valeur = [];
+
+  for (let i = 0; i < res.length; i++) {
+    label.push(res[i]['num_annee']);
+    valeur.push(res[i]['count']);
   }
 
-  const label=[];
-  const valeur=[];
+  let ctx1 = document.getElementById('myChart1');
 
-  for (let index = 0; index < res.length; index++) {
-    label.push(res[index]['count']);
-    valeur.push(res[index]['num_annee']);
-  }
-
-  const ctx1 = document.getElementById('myChart1');
-  
   new Chart(ctx1, {
-      type: 'bar',
-      data: {
-        labels: label,//
-        datasets: [{
-          label: "Nombre d'installations",
-          data: valeur, //
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: [{
+        label: "Nombre d'installations",
+        data: valeur,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
       }
-    });
-  }
+    }
+  });
+}
 
 async function chart2() {
 
-  /* Demande et affiche un graphique avec le  nombre d’installation par région  */
-  
-  const response = await fetch("php/request.php/chart2");
-  const res=[];
+  /* Demande et affiche un graphique avec le  nombre d'installation par région  */
 
-  if (!response.ok)
-    displayErrors(response.status);
-  else {
-     res = await response.json();
+  const response = await fetch("php/request.php/chart2");
+
+  if (!response.ok) {
+    displayErrors(response.status)
+    return false;
   }
-    
-  const label=[];
-  const valeur=[];
-  for (let index = 0; index < res.length; index++) {
-    label.push(res[index]['count']);
-    valeur.push(res[index]['nom_region']);
-    }
-    
-    const ctx2 = document.getElementById('myChart2');
-    
-    new Chart(ctx2, {
-      type: 'bar',
-      data: {
-        labels: label,//
-        datasets: [{
-          label: 'Nombre d’installations',
-          data: valeur,//
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+  const res = await response.json();
+  let label = [];
+  let valeur = [];
+  for (let i = 0; i < res.length; i++) {
+    label.push(res[i]['nom_region']);
+    valeur.push(res[i]['count']);
+  }
+
+  let ctx2 = document.getElementById('myChart2');
+
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: [{
+        label: "Nombre d'installations",
+        data: valeur,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
       }
-    });
+    }
+  });
 
-  }
+}
 
 async function statEnr() {
 
-  /* Demande et affiche nombre d’enregistrement en base  */
+  /* Demande et affiche nombre d'enregistrement en base  */
 
   const response = await fetch("php/request.php/statEnr");
   if (!response.ok)
     displayErrors(response.status);
-  else{
-    const res=await response.json();
-    document.getElementById('stat1').innerHTML+=res[0]['COUNT(*)'];
+  else {
+    const res = await response.json();
+    document.getElementById('stat1').innerHTML += res[0]['count'];
   }
 }
 
 async function stat2() {
 
-  /* Demande et affiche Nombre d’installateurs   */
+  /* Demande et affiche Nombre d'installateurs   */
 
   const response = await fetch("php/request.php/stat2");
   if (!response.ok)
     displayErrors(response.status);
-  else{
-    const res=await response.json();
-    document.getElementById('stat2').innerHTML+=res[0]['COUNT(*)'];
+  else {
+    const res = await response.json();
+    document.getElementById('stat2').innerHTML += res[0]['count'];
   }
 }
 
 async function stat3() {
 
-  /* Demande et affiche Nombre de marques d’onduleurs  */
+  /* Demande et affiche Nombre de marques d'onduleurs  */
 
 
   const response = await fetch("php/request.php/stat3");
   if (!response.ok)
     displayErrors(response.status);
-  else{
-    const res=await response.json();
-    document.getElementById('stat3').innerHTML+=res[0]['COUNT(*)'];
+  else {
+    const res = await response.json();
+    document.getElementById('stat3').innerHTML += res[0]['count'];
   }
 }
 
@@ -132,16 +128,11 @@ async function stat4() {
   const response = await fetch("php/request.php/stat4");
   if (!response.ok)
     displayErrors(response.status);
-  else{
-    const res=await response.json();
-    document.getElementById('stat4').innerHTML+=res[0]['COUNT(*)'];
+  else {
+    const res = await response.json();
+    document.getElementById('stat4').innerHTML += res[0]['count'];
   }
 }
-
-
-
-
-
 
 function displayErrors(errorCode) {
   let messages = {
@@ -161,14 +152,14 @@ function displayErrors(errorCode) {
     document.getElementById('errors').style.display = 'block';
   }
 }
+function main()
+{
+  statEnr();
+  stat2();
+  stat3();
+  stat4();
+  chart1();
+  chart2();
+}
 
-
-
-
-statEnr();
-stat2();
-stat3();
-stat4();
-chart1();
-chart2();
-
+main();

@@ -11,11 +11,12 @@ async function select_carte() {
     if (!response.ok)
         displayErrors(response.status);
     else {
-        res = await response.json();
-        for (let index = 0; index < res.length; index++) {
-            document.getElementById("annee_select").innerHTML += "<option value='" + index + "'>" + res[index][0] + "</option>";
-            document.getElementById("departement_select").innerHTML += "<option value='" + index + "'>" + res[index][1] + "</option>";//Le 0 est a changé par le numero du departement
-
+        let res = await response.json();
+        for (let i = 0; i < res[0].length; i++) {
+            document.getElementById("annee_select").innerHTML += "<option value='" + i + "'>" + res[0][i]['num_annee'] + "</option>";
+        }
+        for (let j = 0; j < res[1].length; j++) {
+            document.getElementById("departement_select").innerHTML += "<option value='"+j+"'>"+res[1][j]['numero']+" - "+res[1][j]['nom_departement']+"</option>";//Le 0 est a changé par le numero du departement
         }
     }
 }
@@ -23,7 +24,7 @@ async function select_carte() {
 async function get_elt_carte(event) {
     /* Recupere l'annee et le dep qui sont dans le select  */
     event.preventDefault();
-    let annee = document.getElementById('annee_select').value;
+    let annee = document.getElementById('annee_select').value; // PB
     let departement = document.getElementById('departement_select').value;
     console.log(annee, departement);
 
@@ -59,3 +60,5 @@ async function affiche_ping(lat, long) {
   }*/
 
 }
+
+select_carte();

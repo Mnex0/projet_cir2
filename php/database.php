@@ -14,33 +14,6 @@ function dbConnect()
   }
   return $db;
 }
-
-function dbRequestPos($db, $annee, $dep)
-/*Request pour la carte  */
-{
-  try {
-    $request = 'SELECT lat,lon FROM installation 
-    RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
-    RIGHT JOIN departement ON ville.id_dep = departement.id_dep;';
-    $request .= 'WHERE num_annee=:annee AND departement.numero=:dep;';
-    $statement = $db->prepare($request);
-    $statement->bindParam(':annee', $annee, PDO::PARAM_INT);
-    $statement->bindParam(':dep', $dep, PDO::PARAM_STR, 20);
-    $statement->execute();
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-  } catch (PDOException $exception) {
-    error_log('Request error: ' . $exception->getMessage());
-    return false;
-  }
-  return $result;
-  /*
-  array (size=24389)
-  0 => 
-    array (size=2)
-      'lat' => null
-      'lon' => null*/
-}
-
 function dbRequestChart1($db)
 {
   /*Request pour le premier graphique, installations par années*/
@@ -87,11 +60,12 @@ array (size=2)
 'nom_region' => string 'Occitanie' (length=9)*/
 }
 
+
 function dbRequestStatEnr($db)
 {
-  /*Request pour le nombre d’enregistrement en base*/
+  /*Request pour le nombre d'enregistrement en base*/
   try {
-    $request = 'SELECT DISTINCT COUNT(*) FROM installation';
+    $request = 'SELECT DISTINCT COUNT(*) AS count FROM installation';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -108,9 +82,9 @@ array (size=1)
 
 function dbRequestStat2($db)
 {
-  /* Request pour le Nombre d’installateurs */
+  /* Request pour le Nombre d'installateurs */
   try {
-    $request = 'SELECT DISTINCT COUNT(*) FROM installateur';
+    $request = 'SELECT DISTINCT COUNT(*) AS count FROM installateur';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -127,9 +101,9 @@ array (size=1)
 
 function dbRequestStat3($db)
 {
-  /* Request pour le Nombre de marques d’onduleurs */
+  /* Request pour le Nombre de marques d'onduleurs */
   try {
-    $request = 'SELECT DISTINCT COUNT(*) FROM marque_ondu ';
+    $request = 'SELECT DISTINCT COUNT(*) AS count FROM marque_ondu ';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -148,7 +122,7 @@ function dbRequestStat4($db)
 {
   /*Request pour le Nombre de marques de panneaux solaires : */
   try {
-    $request = 'SELECT DISTINCT COUNT(*) FROM marque_pan ';
+    $request = 'SELECT DISTINCT COUNT(*) AS count FROM marque_pan ';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -166,7 +140,7 @@ array (size=1)
 function dbRequestSelectRecherche($db) // renvoie 20 valeurs aléatoire de marques d'ondu et de panneaux et de départements
 {
   try {
-    $request = 'SELECT DISTINCT modele_pan.marque, modele_ondu.marque, departement.numero, departement.nom_departement FROM installation 
+    $request = 'SELECT DISTINCT modele_pan.marque AS marque_pan, modele_ondu.marque AS marque_ondu, departement.numero, departement.nom_departement FROM installation 
     INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE 
     INNER JOIN departement ON ville.id_dep = departement.id_dep 
     INNER JOIN modele_pan ON installation.id_pan = modele_pan.id_pan 
@@ -246,4 +220,30 @@ array (size=425)
 0 => 
 array (size=1)
 'marque' => string '3A Energies' (length=11)*/
+}
+
+function dbRequestPos($db, $annee, $dep)
+/*Request pour la carte  */
+{
+  try {
+    $request = 'SELECT lat,lon FROM installation 
+    RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    RIGHT JOIN departement ON ville.id_dep = departement.id_dep;';
+    $request .= 'WHERE num_annee=:annee AND departement.numero=:dep;';
+    $statement = $db->prepare($request);
+    $statement->bindParam(':annee', $annee, PDO::PARAM_INT);
+    $statement->bindParam(':dep', $dep, PDO::PARAM_STR, 20);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('Request error: ' . $exception->getMessage());
+    return false;
+  }
+  return $result;
+  /*
+  array (size=24389)
+  0 => 
+    array (size=2)
+      'lat' => null
+      'lon' => null*/
 }

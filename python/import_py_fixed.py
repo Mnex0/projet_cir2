@@ -372,7 +372,7 @@ def import_final(data: list, communes: list, fichier_destination = "sql/import_f
 
 def main():
     data = nuller_data(parse_csv("dataRessources/cleanData.csv"))
-    communes = parse_csv("dataRessources/communes-france-2024-court.csv")  # Utilise le nouveau fichier
+    communes = parse_csv("dataRessources/communes-france-2024-limite.csv")  # Utilise le nouveau fichier
     
     print("Génération des fichiers d'import SQL...")
     premier_import(data, communes)

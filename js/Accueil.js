@@ -5,11 +5,11 @@ async function chart1() {
   /* Demande et affiche un graphique avec le  nombre d’installations par années  */
 
   const response = await fetch("php/request.php/chart1");
-
+  const res;
   if (!response.ok)
     displayErrors(response.status);
   else {
-    const res = await response.json();
+    res = await response.json();
   }
 
   const label=[];
@@ -47,11 +47,12 @@ async function chart2() {
   /* Demande et affiche un graphique avec le  nombre d’installation par région  */
   
   const response = await fetch("php/request.php/chart2");
-  
+  const res;
+
   if (!response.ok)
     displayErrors(response.status);
   else {
-     const res = await response.json();
+     res = await response.json();
   }
     
   const label=[];

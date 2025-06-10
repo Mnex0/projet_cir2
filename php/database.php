@@ -15,18 +15,19 @@ function dbConnect()
   return $db;
 }
 
-function dbRequestPos($db, $annee, $dep)
+function dbRequestPos($db, $annee, $dep) 
 /*Request pour la carte  */
 {
   try {
-    $request = 'SELECT lat,lon FROM installation';
-    $request .= ' WHERE annee=:annee';
-    $request .= ' AND WHERE dep=:dep ';
+    $request = 'SELECT lat,lon FROM installation ';
+    $request .= 'RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE ';
+    $request .= 'RIGHT JOIN departement ON ville.id_dep = departement.id_dep ';
+    $request .= 'WHERE num_annee=:annee AND departement.numero=:dep;';
     $statement = $db->prepare($request);
-    $statement->bindParam(':annee', $annee, PDO::PARAM_STR, 20);
+    $statement->bindParam(':annee', $annee, PDO::PARAM_INT);
     $statement->bindParam(':dep', $dep, PDO::PARAM_STR, 20);
     $statement->execute();
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
     error_log('Request error: ' . $exception->getMessage());
     return false;
@@ -38,7 +39,7 @@ function dbRequestChart1($db)
 {
   /*Request pour le premier graphique, installations par années*/
   try {
-    $request = 'SELECT COUNT(*), annee FROM installation GROUP BY annee ';
+    $request = 'SELECT DISTINCT COUNT(*), annee FROM installation GROUP BY annee ';
     $statement = $db->prepare($request);
     $result = $statement->fetchALl(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
@@ -52,7 +53,7 @@ function dbRequestChart2($db)
 {
   /*Request pour le premier graphique, installations par régions*/
   try {
-    $request = 'SELECT COUNT(*), region FROM installation GROUP BY region';
+    $request = 'SELECT DISTINCT COUNT(*), region FROM installation GROUP BY region';
     $statement = $db->prepare($request);
     $result = $statement->fetchALl(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
@@ -62,11 +63,11 @@ function dbRequestChart2($db)
   return $result;
 }
 
-function dbRequestStat1($db)
+function dbRequestStatEnr($db)
 {
-  /*Request pour le  nombre d’enregistrement en base*/
+  /*Request pour le nombre d’enregistrement en base*/
   try {
-    $request = 'SELECT COUNT(*)FROM installation ';
+    $request = 'SELECT DISTINCT COUNT(*) FROM installation';
     $statement = $db->prepare($request);
     $result = $statement->fetchALl(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
@@ -80,7 +81,7 @@ function dbRequestStat2($db)
 {
   /* Request pour le Nombre d’installateurs */
   try {
-    $request = 'SELECT nom FROM installateur ';
+    $request = 'SELECT DISTINCT nom FROM installateur ';
     $statement = $db->prepare($request);
     $result = $statement->fetchALl(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
@@ -94,7 +95,7 @@ function dbRequestStat3($db)
 {
   /* Request pour le Nombre de marques d’onduleurs */
   try {
-    $request = 'SELECT marque FROM marque_ondu ';
+    $request = 'SELECT DISTINCT marque FROM marque_ondu ';
     $statement = $db->prepare($request);
     $result = $statement->fetchALl(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
@@ -108,7 +109,7 @@ function dbRequestStat4($db)
 {
   /*Request pour le Nombre de marques de panneaux solaires : */
   try {
-    $request = 'SELECT marque FROM marque_pan ';
+    $request = 'SELECT DISTINCT marque FROM marque_pan ';
     $statement = $db->prepare($request);
     $result = $statement->fetchALl(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {

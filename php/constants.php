@@ -1,10 +1,8 @@
 <?php
 /*A changer  */
 // Database constants.
-  define('DB_USER', 'comweb_tp');
-  define('DB_PASSWORD', 'pt_bewmoc_isen29');
-  define('DB_NAME', 'comweb_tp');
+  define('DB_USER', 'root');
+  define('DB_PASSWORD', '');
+  define('DB_NAME', 'projet_cir2');
   define('DB_SERVER', 'localhost');
   define('DB_PORT', '3306');
-
-  ?>

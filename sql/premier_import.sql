@@ -812,8 +812,4 @@ VALUES
 -- _______________________ Regions __________________________--
 INSERT INTO `region`(`nom_region`)
 VALUES
-    ("Occitanie"), ("Languedoc-Roussillon Midi-Pyrénées"), ("Auvergne-Rhône-Alpes"), ("Pays de la Loire"),
-    ("Provence-Alpes-Côte d'Azur"), ("Grand Est"), ("Île-de-France"), ("Bourgogne Franche-Comté"), ("Aquitaine-Limousin-Poitou-Charentes"),
-    ("Nord-Pas-de-Calais Picardie"), ("Bretagne"), ("Normandie"), ("Alsace-Champagne-Ardenne-Lorraine"), ("Corse"),
-    ("Centre-Val de Loire"), ("Nouvelle-Aquitaine"), ("Bourgogne-Franche-Comté"), ("Hauts-de-France"), ("NULL"),
-    ("Normandy"), ("Brittany");
+    ("Auvergne-Rhône-Alpes");

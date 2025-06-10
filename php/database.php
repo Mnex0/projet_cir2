@@ -110,7 +110,7 @@ function dbRequestStat2($db)
 {
   /* Request pour le Nombre d’installateurs */
   try {
-    $request = 'SELECT DISTINCT nom FROM installateur ';
+    $request = 'SELECT DISTINCT COUNT(*), nom FROM installateur';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -129,7 +129,7 @@ function dbRequestStat3($db)
 {
   /* Request pour le Nombre de marques d’onduleurs */
   try {
-    $request = 'SELECT DISTINCT marque FROM marque_ondu ';
+    $request = 'SELECT DISTINCT COUNT(*), marque FROM marque_ondu ';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -148,7 +148,7 @@ function dbRequestStat4($db)
 {
   /*Request pour le Nombre de marques de panneaux solaires : */
   try {
-    $request = 'SELECT DISTINCT marque FROM marque_pan ';
+    $request = 'SELECT DISTINCT COUNT(*), marque FROM marque_pan ';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -187,4 +187,40 @@ function dbRequestSelectRecherche($db) // renvoie 20 valeurs aléatoire de marqu
       'marque' => string 'SMA' (length=3)
       'numero' => string '67' (length=2)
       'nom_departement' => string 'Bas-Rhin' (length=8)*/
+}
+
+function dbRequestSelectCarte($db) // renvoie toutes les annees et 20 departements aléa
+{
+  try {
+    $request1 = 'SELECT DISTINCT num_annee FROM installation';
+    $statement1 = $db->prepare($request1);
+    $statement1->execute();
+    $result1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+    $request2 = 'SELECT DISTINCT departement.numero, departement.nom_departement FROM installation
+    INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    INNER JOIN departement ON ville.id_dep = departement.id_dep 
+    INNER JOIN modele_pan ON installation.id_pan = modele_pan.id_pan 
+    INNER JOIN modele_ondu ON installation.id_ondu = modele_ondu.id_ondu 
+    ORDER BY RAND() 
+    LIMIT 20;';
+    $statement2 = $db->prepare($request2);
+    $statement2->execute();
+    $result2 = $statement2->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('Request error: ' . $exception->getMessage());
+    return false;
+  }
+  return [$result1, $result2];/*
+  array (size=2)
+  0 => 
+    array (size=30)
+      0 => 
+        array (size=1)
+          'num_annee' => int 1990
+  1 => 
+    array (size=20)
+      0 => 
+        array (size=2)
+          'numero' => string '38' (length=2)
+          'nom_departement' => string 'Is├¿re' (length=9)*/
 }

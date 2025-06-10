@@ -808,8 +808,8 @@ VALUES
 -- _______________________ Mois __________________________--
 INSERT INTO `mois`(`num_mois`)
 VALUES
-    (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (NULL);
--- _______________________ Marques Regions __________________________--
+    (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12);
+-- _______________________ Regions __________________________--
 INSERT INTO `region`(`nom_region`)
 VALUES
     ("Occitanie"), ("Languedoc-Roussillon Midi-Pyrénées"), ("Auvergne-Rhône-Alpes"), ("Pays de la Loire"),

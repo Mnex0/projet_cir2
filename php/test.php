@@ -2,5 +2,7 @@
 require_once 'database.php';
 
 $db = dbConnect();
+$lat = 43.51;
+$long = 1.51;
 
-var_dump(dbRequestStat3   ($db));
+var_dump(dbRequestPing($db, $lat, $long));

@@ -48,10 +48,10 @@ elseif ($requestRessource == "selectRecherche") { // prendre 20 marque ondu, mar
 }
 elseif ($requestRessource == "selectCarte") { // prendre toutes les annees et 20 departements aléa
   $data = dbRequestSelectCarte($db);
-}//pas fait 
+}
 elseif ($requestRessource == "ping") { // localité et puissance du panneau
   $data = dbRequestPing($db, $lat, $long);
-}//pas fait
+}
 
 //Envoie les info
 

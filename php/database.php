@@ -224,3 +224,26 @@ function dbRequestSelectCarte($db) // renvoie toutes les annees et 20 departemen
           'numero' => string '38' (length=2)
           'nom_departement' => string 'Is├¿re' (length=9)*/
 }
+
+function dbRequestPing($db, $lat, $long)
+{
+  /*localité et puissance du panneau*/
+  try {
+    $request = 'SELECT ville.localite, installation.puissance_crete FROM installation 
+    INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE
+    WHERE installation.lat=:lat AND installation.lon=:long;';
+    $statement = $db->prepare($request);
+    $statement->bindParam(':lat', $lat, PDO::PARAM_STR);
+    $statement->bindParam(':long', $long, PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('Request error: ' . $exception->getMessage());
+    return false;
+  }
+  return $result;/*
+array (size=425)
+0 => 
+array (size=1)
+'marque' => string '3A Energies' (length=11)*/
+}

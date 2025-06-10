@@ -9,7 +9,7 @@ async function chart1() {
   if (!response.ok)
     displayErrors(response.status);
   else {
-    res = await response.json();
+    const res = await response.json();
   }
 
   const label=[];
@@ -51,7 +51,7 @@ async function chart2() {
   if (!response.ok)
     displayErrors(response.status);
   else {
-    res = await response.json();
+     const res = await response.json();
   }
     
   const label=[];

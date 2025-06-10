@@ -110,7 +110,7 @@ function dbRequestStat2($db)
 {
   /* Request pour le Nombre d’installateurs */
   try {
-    $request = 'SELECT DISTINCT COUNT(*), nom FROM installateur';
+    $request = 'SELECT DISTINCT COUNT(*) FROM installateur';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -129,7 +129,7 @@ function dbRequestStat3($db)
 {
   /* Request pour le Nombre de marques d’onduleurs */
   try {
-    $request = 'SELECT DISTINCT COUNT(*), marque FROM marque_ondu ';
+    $request = 'SELECT DISTINCT COUNT(*) FROM marque_ondu ';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -148,7 +148,7 @@ function dbRequestStat4($db)
 {
   /*Request pour le Nombre de marques de panneaux solaires : */
   try {
-    $request = 'SELECT DISTINCT COUNT(*), marque FROM marque_pan ';
+    $request = 'SELECT DISTINCT COUNT(*) FROM marque_pan ';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);

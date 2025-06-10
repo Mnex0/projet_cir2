@@ -45,7 +45,7 @@ elseif ($requestRessource == "stat4") { // Nb marque pan
 }
 elseif ($requestRessource == "selectRecherche") { // prendre 20 marque ondu, marque pan, et aléatoitement departement
   $data = dbRequestSelectRecherche($db);
-}//pas fait 
+}
 elseif ($requestRessource == "selectCarte") { // prendre toutes les annees et 20 departements aléa
   $data = dbRequestSelectCarte($db);
 }//pas fait 

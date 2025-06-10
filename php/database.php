@@ -166,7 +166,13 @@ array (size=1)
 function dbRequestSelectRecherche($db) // renvoie 20 valeurs aléatoire de marques d'ondu et de panneaux et de départements
 {
   try {
-    $request = 'SELECT  FROM installation ';
+    $request = 'SELECT DISTINCT modele_pan.marque, modele_ondu.marque, departement.numero, departement.nom_departement FROM installation 
+    INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    INNER JOIN departement ON ville.id_dep = departement.id_dep 
+    INNER JOIN modele_pan ON installation.id_pan = modele_pan.id_pan 
+    INNER JOIN modele_ondu ON installation.id_ondu = modele_ondu.id_ondu 
+    ORDER BY RAND() 
+    LIMIT 20;';
     $statement = $db->prepare($request);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -174,5 +180,11 @@ function dbRequestSelectRecherche($db) // renvoie 20 valeurs aléatoire de marqu
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=20)
+  0 => 
+    array (size=3)
+      'marque' => string 'SMA' (length=3)
+      'numero' => string '67' (length=2)
+      'nom_departement' => string 'Bas-Rhin' (length=8)*/
 }

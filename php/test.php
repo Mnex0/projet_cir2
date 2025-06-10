@@ -3,4 +3,4 @@ require_once 'database.php';
 
 $db = dbConnect();
 
-var_dump(dbRequestStat4($db));
+var_dump(dbRequestSelectRecherche($db));

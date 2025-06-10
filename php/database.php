@@ -19,9 +19,9 @@ function dbRequestPos($db, $annee, $dep)
 /*Request pour la carte  */
 {
   try {
-    $request = 'SELECT lat,lon FROM installation ';
-    $request .= 'RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE ';
-    $request .= 'RIGHT JOIN departement ON ville.id_dep = departement.id_dep ';
+    $request = 'SELECT lat,lon FROM installation 
+    RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    RIGHT JOIN departement ON ville.id_dep = departement.id_dep;';
     $request .= 'WHERE num_annee=:annee AND departement.numero=:dep;';
     $statement = $db->prepare($request);
     $statement->bindParam(':annee', $annee, PDO::PARAM_INT);
@@ -32,35 +32,59 @@ function dbRequestPos($db, $annee, $dep)
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result; 
+  /*
+  array (size=24389)
+  0 => 
+    array (size=2)
+      'lat' => null
+      'lon' => null*/
 }
 
 function dbRequestChart1($db)
 {
   /*Request pour le premier graphique, installations par années*/
   try {
-    $request = 'SELECT DISTINCT COUNT(*), annee FROM installation GROUP BY annee ';
+    $request = 'SELECT COUNT(*) as count, num_annee FROM installation GROUP BY num_annee;';
     $statement = $db->prepare($request);
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $statement->execute(); // Exécute la requête
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC); // Récupère les résultats
   } catch (PDOException $exception) {
     error_log('RequestChart1 error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=30)
+  0 => 
+    array (size=2)
+      'count' => int 3
+      'num_annee' => int 1990*/
 }
 
 function dbRequestChart2($db)
 {
-  /*Request pour le premier graphique, installations par régions*/
+  /*Request pour le deuxième graphique, installations par régions*/
   try {
-    $request = 'SELECT DISTINCT COUNT(*), region FROM installation GROUP BY region';
+    $request = '
+      SELECT COUNT(*) as count, departement.nom_region
+      FROM installation
+      INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE
+      INNER JOIN departement ON ville.id_dep = departement.id_dep
+      GROUP BY departement.nom_region;
+    ';
     $statement = $db->prepare($request);
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
     error_log('RequestChart2 error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=16)
+  0 => 
+    array (size=2)
+      'count' => int 1034
+      'nom_region' => string 'Occitanie' (length=9)*/
 }
 
 function dbRequestStatEnr($db)
@@ -69,12 +93,17 @@ function dbRequestStatEnr($db)
   try {
     $request = 'SELECT DISTINCT COUNT(*) FROM installation';
     $statement = $db->prepare($request);
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=1)
+  0 => 
+    array (size=1)
+      'COUNT(*)' => int 24276*/
 }
 
 function dbRequestStat2($db)
@@ -83,12 +112,17 @@ function dbRequestStat2($db)
   try {
     $request = 'SELECT DISTINCT nom FROM installateur ';
     $statement = $db->prepare($request);
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=7308)
+  0 => 
+    array (size=1)
+      'nom' => string 'ED' (length=40)*/
 }
 
 function dbRequestStat3($db)
@@ -97,12 +131,17 @@ function dbRequestStat3($db)
   try {
     $request = 'SELECT DISTINCT marque FROM marque_ondu ';
     $statement = $db->prepare($request);
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=154)
+  0 => 
+    array (size=1)
+      'marque' => string 'ABB' (length=3)*/
 }
 
 function dbRequestStat4($db)
@@ -111,10 +150,15 @@ function dbRequestStat4($db)
   try {
     $request = 'SELECT DISTINCT marque FROM marque_pan ';
     $statement = $db->prepare($request);
-    $result = $statement->fetchALl(PDO::FETCH_ASSOC);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result;
+  return $result;/*
+  array (size=425)
+  0 => 
+    array (size=1)
+      'marque' => string '3A Energies' (length=11)*/
 }

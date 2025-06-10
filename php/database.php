@@ -15,7 +15,7 @@ function dbConnect()
   return $db;
 }
 
-function dbRequestPos($db, $annee, $dep) 
+function dbRequestPos($db, $annee, $dep)
 /*Request pour la carte  */
 {
   try {
@@ -32,7 +32,7 @@ function dbRequestPos($db, $annee, $dep)
     error_log('Request error: ' . $exception->getMessage());
     return false;
   }
-  return $result; 
+  return $result;
   /*
   array (size=24389)
   0 => 
@@ -54,11 +54,11 @@ function dbRequestChart1($db)
     return false;
   }
   return $result;/*
-  array (size=30)
-  0 => 
-    array (size=2)
-      'count' => int 3
-      'num_annee' => int 1990*/
+array (size=30)
+0 => 
+array (size=2)
+'count' => int 3
+'num_annee' => int 1990*/
 }
 
 function dbRequestChart2($db)
@@ -80,11 +80,11 @@ function dbRequestChart2($db)
     return false;
   }
   return $result;/*
-  array (size=16)
-  0 => 
-    array (size=2)
-      'count' => int 1034
-      'nom_region' => string 'Occitanie' (length=9)*/
+array (size=16)
+0 => 
+array (size=2)
+'count' => int 1034
+'nom_region' => string 'Occitanie' (length=9)*/
 }
 
 function dbRequestStatEnr($db)
@@ -100,10 +100,10 @@ function dbRequestStatEnr($db)
     return false;
   }
   return $result;/*
-  array (size=1)
-  0 => 
-    array (size=1)
-      'COUNT(*)' => int 24276*/
+array (size=1)
+0 => 
+array (size=1)
+'COUNT(*)' => int 24276*/
 }
 
 function dbRequestStat2($db)
@@ -119,10 +119,10 @@ function dbRequestStat2($db)
     return false;
   }
   return $result;/*
-  array (size=7308)
-  0 => 
-    array (size=1)
-      'nom' => string 'ED' (length=40)*/
+array (size=7308)
+0 => 
+array (size=1)
+'nom' => string 'ED' (length=40)*/
 }
 
 function dbRequestStat3($db)
@@ -138,10 +138,10 @@ function dbRequestStat3($db)
     return false;
   }
   return $result;/*
-  array (size=154)
-  0 => 
-    array (size=1)
-      'marque' => string 'ABB' (length=3)*/
+array (size=154)
+0 => 
+array (size=1)
+'marque' => string 'ABB' (length=3)*/
 }
 
 function dbRequestStat4($db)
@@ -157,8 +157,22 @@ function dbRequestStat4($db)
     return false;
   }
   return $result;/*
-  array (size=425)
-  0 => 
-    array (size=1)
-      'marque' => string '3A Energies' (length=11)*/
+array (size=425)
+0 => 
+array (size=1)
+'marque' => string '3A Energies' (length=11)*/
+}
+
+function dbRequestSelectRecherche($db) // renvoie 20 valeurs aléatoire de marques d'ondu et de panneaux et de départements
+{
+  try {
+    $request = 'SELECT  FROM installation ';
+    $statement = $db->prepare($request);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('Request error: ' . $exception->getMessage());
+    return false;
+  }
+  return $result;
 }

@@ -43,13 +43,13 @@ elseif ($requestRessource == "stat3") { // Nb marque ondu
 elseif ($requestRessource == "stat4") { // Nb marque pan
   $data = dbRequestStat4($db);
 }
-elseif ($requestRessource == "selectRecherche") {
+elseif ($requestRessource == "selectRecherche") { // prendre 20 marque ondu, marque pan, et aléatoitement departement
   $data = dbRequestSelectRecherche($db);
 }//pas fait 
-elseif ($requestRessource == "selectCarte") {
+elseif ($requestRessource == "selectCarte") { // prendre toutes les annees et 20 departements aléa
   $data = dbRequestSelectCarte($db);
 }//pas fait 
-elseif ($requestRessource == "ping") {
+elseif ($requestRessource == "ping") { // localité et puissance du panneau
   $data = dbRequestPing($db, $lat, $long);
 }//pas fait
 

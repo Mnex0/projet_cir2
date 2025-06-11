@@ -1,9 +1,10 @@
 MDP ssh : Joatthieu
 
 Ne sont pas disponibles :
-    - La partie back avec visualisation, ajout et modification de données
+    - La partie php du back avec visualisation, ajout et modification de données
     - Le graphique par région et par année
-    - La recherche d'installation sans champs précisé
+    - La recherche d'installation avec un ou plusieurs champs manquants
+Un jour de plus aurait été idéal pour terminer.
 
 Exemple d'import : 
 DROP DATABASE IF EXISTS projet_cir2;

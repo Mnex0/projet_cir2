@@ -26,12 +26,7 @@ function dbRequestChart1($db)
     error_log('RequestChart1 error: ' . $exception->getMessage());
     return false;
   }
-  return $result;/*
-array (size=30)
-0 => 
-array (size=2)
-'count' => int 3
-'num_annee' => int 1990*/
+  return $result;
 }
 
 function dbRequestChart2($db)
@@ -52,12 +47,28 @@ function dbRequestChart2($db)
     error_log('RequestChart2 error: ' . $exception->getMessage());
     return false;
   }
-  return $result;/*
-array (size=16)
-0 => 
-array (size=2)
-'count' => int 1034
-'nom_region' => string 'Occitanie' (length=9)*/
+  return $result;
+}
+
+function dbRequestChart3($db)
+{
+  /*Request pour le deuxième graphique, installations par régions et années*/
+  try {
+    $request = '
+      SELECT  num_annee, COUNT(*) as count, departement.nom_region
+      FROM installation
+      INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE
+      INNER JOIN departement ON ville.id_dep = departement.id_dep
+      GROUP BY num_annee;
+    ';
+    $statement = $db->prepare($request);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('RequestChart2 error: ' . $exception->getMessage());
+    return false;
+  }
+  return $result;
 }
 
 

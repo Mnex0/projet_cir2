@@ -80,6 +80,68 @@ async function chart2() {
   });
 }
 
+async function chart3() {
+
+  /* Demande et affiche un graphique avec le  nombre d'installations par années  */
+
+  const response = await fetch("php/request.php/chart3");
+  if (!response.ok) {
+    displayErrors(response.status)
+    return false;
+  }
+  const res = await response.json();
+  let labels = [];
+  let data = {}/*{
+  labels: labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: Utils.numbers(NUMBER_CFG),
+      backgroundColor: Utils.CHART_COLORS.red,
+    },
+    {
+      label: 'Dataset 2',
+      data: Utils.numbers(NUMBER_CFG),
+      backgroundColor: Utils.CHART_COLORS.blue,
+    },
+    {
+      label: 'Dataset 3',
+      data: Utils.numbers(NUMBER_CFG),
+      backgroundColor: Utils.CHART_COLORS.green,
+    },
+  ]
+};*/
+
+  for (let i = 0; i < res.length; i++) {
+    labels.push(res[i]['num_annee']);
+    data['datasets'].push({'label': res[i]['nom_region'], 'data': res[i]['count']});
+  }
+
+  let ctx3 = document.getElementById('myChart3');
+
+  new Chart(ctx3, {
+    type: 'bar',
+    data: data,
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Installation par année par région'
+        },
+      },
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true
+        }
+      }
+    }
+  });
+}
+
 async function statEnr() {
 
   /* Demande et affiche nombre d'enregistrement en base  */
@@ -158,6 +220,7 @@ function main() {
   stat4();
   chart1();
   chart2();
+  chart3();
 }
 
 main();

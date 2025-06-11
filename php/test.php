@@ -8,4 +8,4 @@ $marqueondu = 'SMA';
 $marquepan = 'Sanyo';
 $dep = '31';
 
-var_dump(dbRequestDetails($db, 33));
+var_dump(dbRequestChart3($db));

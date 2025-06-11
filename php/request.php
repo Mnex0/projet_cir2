@@ -27,7 +27,10 @@ if ($requestRessource == "chart1") { // Nb d'installations par années
 }
 elseif ($requestRessource == "chart2") { // Nb d'installations par région
   $data = dbRequestChart2($db);
-}//pas fait 
+}
+elseif ($requestRessource == "chart2") { // Nb d'installations par région et par année
+  $data = dbRequestChart3($db);
+}
 elseif ($requestRessource == "carte" && $requestMethod == "GET") {
   $annee = $_GET['annee'];
   $dep = $_GET['dep'];

@@ -78,7 +78,6 @@ async function chart2() {
       }
     }
   });
-
 }
 
 async function statEnr() {
@@ -152,8 +151,7 @@ function displayErrors(errorCode) {
     document.getElementById('errors').style.display = 'block';
   }
 }
-function main()
-{
+function main() {
   statEnr();
   stat2();
   stat3();

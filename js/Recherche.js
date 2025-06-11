@@ -17,7 +17,19 @@ async function select_recherche() {
     }
 }
 
-async function get_form(event) {
+async function get_form_no_ondu(event) {
+    
+}
+
+async function get_form_no_pan(event) {
+    
+}
+
+async function get_form_no_dep(event) {
+    
+}
+
+async function get_form_all(event) {
     // Récupère les valeurs des selects et 
     event.preventDefault();
     let marque_onduleur = document.getElementById('marque_ondu_select').value;

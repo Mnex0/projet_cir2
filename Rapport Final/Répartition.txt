@@ -1,0 +1,26 @@
+Répartition
+
+Ce qui est fait :
+	Le Front
+	Carte
+	Recherche
+	Front du Back accueil
+
+Ce qui reste à faire :
+	Détails
+	Fin Back
+
+MCD et modifs :
+	Clarification des noms de certains champs
+	Changement de types et de tailles
+
+Import données :
+	Création d'un programme python
+	Explications dans le README
+
+Web Front
+
+Web Back :
+	pb et réso :
+		Erreur alors que le résultat était simplement vide
+		Quelques requêtes SQL à réécrire

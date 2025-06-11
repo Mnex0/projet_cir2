@@ -1,4 +1,4 @@
-
+'use strict'
 
 document.getElementById('form_recherche').addEventListener('submit', get_form);
 document.getElementById("res").style.display = "none";
@@ -8,17 +8,15 @@ async function select_recherche() {
     if (!response.ok)
        displayErrors(response.status);
     else{
-        res=await response.json();
-        for (let index = 0; index < res.length; index++) {
-           document.getElementById("marque_ondu_select").innerHTML+= "<option value='"+index+"'>"+res[index][0]+"</option>";
-           document.getElementById("marque_pan_select").innerHTML+= "<option value='"+index+"'>"+res[index][1]+"</option>";
-           document.getElementById("departement_select").innerHTML+= "<option value='"+index+"'>"+res[index][2]+"</option>";
+        let res = await response.json();
+        for (let i = 0; i < res.length; i++) {
+           document.getElementById("marque_ondu_select").innerHTML+= "<option value='"+i+"'>"+res[i]['marque_ondu']+"</option>";
+           document.getElementById("marque_pan_select").innerHTML+= "<option value='"+i+"'>"+res[i]['marque_pan']+"</option>";
+           document.getElementById("departement_select").innerHTML+= "<option value='"+i+"'>"+res[i]['numero']+" - "+res[i]['nom_departement']+"</option>";
            
         }
 }
 }
-
-
 
 async function get_form(event) {
     /*    */
@@ -49,10 +47,9 @@ async function get_form(event) {
     
 }
 
-
 function affiche_recherche(mois_annee,nb_panneaux,surface,puissance,loc){
     /* affiche les paramètres dans la page html*/
     document.getElementById("res_recherche").innerHTML+="<div class='row row-cols-6'> <div class='col' id='mois_annee'>"+mois_annee+"</div><div class='col' id='nb_panneaux'>"+nb_panneaux+"</div><div class='col' id='surface'>"+surface+"</div><div class='col' id='puissance_crete'>"+puissance+"</div><div class='col' id='location'>"+loc+"</div><div class='col' id='details'><a href='Details.html' >Clique ici pour avoir les détails</a></div></div>"
-
-
 }
+
+select_recherche();

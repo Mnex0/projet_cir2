@@ -5,4 +5,4 @@ $db = dbConnect();
 $lat = 43.51;
 $long = 1.51;
 
-var_dump(dbRequestPing($db, $lat, $long));
+var_dump(dbRequestSelectCarte($db));

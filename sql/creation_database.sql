@@ -114,7 +114,6 @@ CREATE TABLE ville(
         code_INSEE Varchar (10) ,
         localite   Varchar (50) ,
         id_dep     Int NOT NULL
-	,CONSTRAINT ville_AK UNIQUE (localite)
 	,CONSTRAINT ville_PK PRIMARY KEY (code_INSEE)
 
 	,CONSTRAINT ville_departement_FK FOREIGN KEY (id_dep) REFERENCES departement(id_dep)

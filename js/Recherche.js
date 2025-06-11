@@ -17,16 +17,21 @@ async function select_recherche() {
     }
 }
 
-async function get_form_no_ondu(event) {
-    
-}
+function call_form(event) {
+    event.preventDefault();
+    let marque_onduleur = document.getElementById('marque_ondu_select').value;
+    let marque_panneaux = document.getElementById('marque_pan_select').value;
+    let departement = document.getElementById('departement_select').value;
+    if (marque_onduleur != "--Marque de l'onduleur--" && marque_panneaux != "--Marque des panneaux--" && departement != "--Département--") {
 
-async function get_form_no_pan(event) {
-    
-}
+    }
+    elseif(marque_ondul != "--Marque des panneaux--" && departement != "--Département--") {
 
-async function get_form_no_dep(event) {
-    
+    }
+    elseif(marque_onduleur != "--Marque de l'onduleur--" && departement != "--Département--") {
+
+    }
+    elseif(marque_onduleur != "--Marque de l'onduleur--" && marque_panneaux != "--Marque des panneaux--")
 }
 
 async function get_form_all(event) {
@@ -67,5 +72,30 @@ async function get_form_all(event) {
         }
     }
 }
+
+async function get_form_no_ondu(event) {
+
+}
+
+async function get_form_no_pan(event) {
+
+}
+
+async function get_form_no_dep(event) {
+
+}
+
+async function get_form_no_ondu_pan(event) {
+
+}
+
+async function get_form_no_ondu_dep(event) {
+
+}
+
+async function get_form_no_pan_dep(event) {
+
+}
+
 
 select_recherche();

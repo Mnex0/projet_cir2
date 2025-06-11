@@ -1,13 +1,13 @@
 use projet_cir2;
 -- _______________________ Annees __________________________--
-INSERT INTO `annee`(`num_annee`)
+INSERT IGNORE INTO `annee`(`num_annee`)
 VALUES
     (2007), (2008), (2006), (2005), (2010), (2000), (2011), (2003), (2009),
     (2017), (2002), (2004), (1999), (1998), (1996), (2012), (2016), (2013), (2015),
     (2014), (2020), (2019), (2018), (2022), (2021), (2023), (1993), (1997), (2001),
     (1990);
 -- _______________________ Installateurs __________________________--
-INSERT INTO `installateur`(`nom`)
+INSERT IGNORE INTO `installateur`(`nom`)
 VALUES
     ("MECOTECH"), ("Helio Therma"), ("Cervin Enr"), ("CRESTEY Energie Renouvelable"), ("SIDEC"), ("SPER"), ("Thermi Confort"), ("NTD Provence"), ("KBE Solaire"),
     ("Vivreco+PlacementSolaire"), ("PIE ENERGIES"), ("SYS ENR"), ("ESE"), ("DELANNOY Robin"), ("http://www.marseille-energierenouvelable"), ("A l Eau Solaire"), ("TRAMONTANA"), ("R. LEPARGNEUR"), ("Lajambe Fran&ccedil;ois"),
@@ -741,7 +741,7 @@ VALUES
     ("Himself "), ("France Confort "), ("monabee"), ("La Brosse"), ("Soft"), ("conseilsdartisans"), ("ENR Solutions"), ("Ma maison verte "), ("entreprise disparue (Aubagne )"), ("Allairedutemps - 17000 La Rochelle"),
     ("eco renov"), ("Roi solaire"), ("cap eco energy"), ("Hugo Solaire"), ("A+ Services, 26260 MARGES"), ("Photovolta&amp;amp;amp;iuml;que 83"), ("ENERGIE VERTE DE FRANCE"), ("SARTHE SOLAIRE BROSSIER"), ("Olysi");
 -- _______________________ Marques Onduleurs __________________________--
-INSERT INTO `marque_ondu`(`marque`)
+INSERT IGNORE INTO `marque_ondu`(`marque`)
 VALUES
     ("SMA"), ("Mastervolt"), ("Sputnik"), ("Enphase Energy"), ("CONERGY"), ("Tenesol"), ("Fronius"), ("KACO"), ("Photowatt"),
     ("Solax"), ("Power-One"), ("Total Energie"), ("ABB"), ("EFFEKTA"), ("Siemens"), ("Schuco"), ("Solwex"), ("Solarstocc"), ("AEG"),
@@ -760,7 +760,7 @@ VALUES
     ("Invertomatic"), ("ASP"), ("EAI"), ("BEON ENERGY"), ("saj-electric"), ("Imeon Energy"), ("Envertech"), ("UFE"), ("CLIPSOL"), ("Courtois"),
     ("Huayu New Energy Technologies"), ("Trace"), ("EPEVER"), ("Goodwe"), ("Hangzhou Zhejiang");
 -- _______________________ Marques Panneaux __________________________--
-INSERT INTO `marque_pan`(`marque`)
+INSERT IGNORE INTO `marque_pan`(`marque`)
 VALUES
     ("Sanyo"), ("Canadian Solar"), ("Mitsubishi"), ("Schuco"), ("Roto Frank"), ("Kyocera"), ("CONERGY"), ("Solar-Fabrik"), ("SHARP"),
     ("KIOTO"), ("Tenesol"), ("Imerys"), ("TRINA SOLAR"), ("SOLVIS"), ("Photowatt"), ("DAXTEC"), ("Istar Solar"), ("SUNTECH"), ("Solarfun"),
@@ -810,7 +810,7 @@ INSERT INTO `mois`(`num_mois`)
 VALUES
     (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12);
 -- _______________________ Regions __________________________--
-INSERT INTO `region`(`nom_region`)
+INSERT IGNORE INTO `region`(`nom_region`)
 VALUES
     ("Auvergne-Rhône-Alpes"), ("Hauts-de-France"), ("Provence-Alpes-Côte d'Azur"), ("Grand Est"),
     ("Occitanie"), ("Normandie"), ("Nouvelle-Aquitaine"), ("Centre-Val de Loire"), ("Bourgogne-Franche-Comté"),

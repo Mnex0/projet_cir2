@@ -228,7 +228,7 @@ function dbRequestPos($db, $annee, $dep)
       */
 }
 
-function dbRequestRecherche($db, $m_ondu, $m_pan, $dep) {
+function dbRequestRechercheAll($db, $m_ondu, $m_pan, $dep) {
   try {
     $request = 'SELECT id, num_mois AS mois, num_annee AS annee, nb_panneau, puissance_crete AS puissance, surface, puissance_crete, ville.localite AS localite FROM installation 
     RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
@@ -250,21 +250,17 @@ function dbRequestRecherche($db, $m_ondu, $m_pan, $dep) {
   }
   return $result;
 }
-/*
+
 function dbRequestDetails($db, $id) {
   try {
-    $request = 'SELECT id, num_mois AS mois, num_annee AS annee, nb_panneau AS puissance, surface, puissance_crete, ville.localite AS localite FROM installation 
-    RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
-    RIGHT JOIN departement ON ville.id_dep = departement.id_dep
-    RIGHT JOIN modele_pan ON installation.modele_panneau = modele_pan.modele_panneau
-    RIGHT JOIN modele_ondu ON installation.modele_onduleur = modele_ondu.modele_onduleur
-    RIGHT JOIN marque_pan ON modele_pan.marque = marque_pan.marque
-    RIGHT JOIN marque_ondu ON modele_ondu.marque = marque_ondu.marque
-    WHERE marque_ondu.marque=:mondu AND marque_pan.marque=:mpan AND departement.numero=:dep;';
+    $request = 'SELECT id, num_mois AS mois_installation, num_annee AS an_installation, nb_panneau, modele_pan.marque AS marque_pan, modele_pan.modele_panneau AS modele_pan, nb_onduleur, modele_ondu.marque, modele_ondu.modele_onduleur, puissance_crete, surface, pente, pente_optimum, orientation, orientation_optimum, nom AS installatur, production_pvgis, lat, lon, installation.code_INSEE, ville.localite AS localite, departement.numero, departement.nom_departement, departement.nom_region  FROM installation 
+    JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    JOIN departement ON ville.id_dep = departement.id_dep
+    JOIN modele_pan ON installation.modele_panneau = modele_pan.modele_panneau
+    JOIN modele_ondu ON installation.modele_onduleur = modele_ondu.modele_onduleur
+    WHERE installation.id=:id;';
     $statement = $db->prepare($request);
-    $statement->bindParam(':mondu', $m_ondu, PDO::PARAM_STR);
-    $statement->bindParam(':mpan', $m_pan, PDO::PARAM_STR);
-    $statement->bindParam(':dep', $dep, PDO::PARAM_STR);
+    $statement->bindParam(':id', $id, PDO::PARAM_STR);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $exception) {
@@ -272,4 +268,4 @@ function dbRequestDetails($db, $id) {
     return false;
   }
   return $result;
-}*/
+}

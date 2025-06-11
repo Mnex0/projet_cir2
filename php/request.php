@@ -55,7 +55,11 @@ elseif ($requestRessource == "recherche" && $requestMethod == 'GET') {
   $mondu = $_GET['mondu'];
   $mpan = $_GET['mpan'];
   $dep = $_GET['dep'];
-  $data = dbRequestRecherche($db, $mondu, $mpan, $dep);
+  $data = dbRequestRechercheAll($db, $mondu, $mpan, $dep);
+}
+elseif ($requestRessource == "details" && $requestMethod == 'GET') {
+  $id = $_GET['id'];
+  $data = dbRequestDetails($db, $id);
 }
 
 //Envoie les info

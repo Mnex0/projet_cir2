@@ -22,24 +22,34 @@ function call_form(event) {
     let marque_onduleur = document.getElementById('marque_ondu_select').value;
     let marque_panneaux = document.getElementById('marque_pan_select').value;
     let departement = document.getElementById('departement_select').value;
-    if (marque_onduleur != "--Marque de l'onduleur--" && marque_panneaux != "--Marque des panneaux--" && departement != "--Département--") {
-
+    if (marque_onduleur == "--Marque de l'onduleur--" && marque_panneaux == "--Marque des panneaux--" && departement == "--Département--") {
+        get_form_none();
     }
-    elseif(marque_ondul != "--Marque des panneaux--" && departement != "--Département--") {
-
+    else if (marque_panneaux == "--Marque des panneaux--" && departement == "--Département--") {
+        get_form_no_pan_dep(marque_onduleur);
     }
-    elseif(marque_onduleur != "--Marque de l'onduleur--" && departement != "--Département--") {
-
+    else if (marque_onduleur == "--Marque de l'onduleur--" && departement == "--Département--") {
+        get_form_no_ondu_dep(marque_panneaux);
     }
-    elseif(marque_onduleur != "--Marque de l'onduleur--" && marque_panneaux != "--Marque des panneaux--")
+    else if (marque_onduleur == "--Marque de l'onduleur--" && marque_panneaux == "--Marque des panneaux--") {
+        get_form_no_ondu_pan(departement);
+    }
+    else if (marque_onduleur == "--Marque de l'onduleur--") {
+        get_form_no_ondu(marque_panneaux, departement);
+    }
+    else if (marque_panneaux == "--Marque des panneaux--") {
+        get_form_no_pan(marque_onduleur, departement);
+    }
+    else if (departement == "--Département--") {
+        get_form_no_dep(marque_onduleur, marque_panneaux);
+    }
+    else {
+        get_form_all(marque_onduleur, marque_panneaux, departement);
+    }
 }
 
-async function get_form_all(event) {
+async function get_form_all(marque_onduleur, marque_panneaux, departement) {
     // Récupère les valeurs des selects et 
-    event.preventDefault();
-    let marque_onduleur = document.getElementById('marque_ondu_select').value;
-    let marque_panneaux = document.getElementById('marque_pan_select').value;
-    let departement = document.getElementById('departement_select').value;
     const response = await fetch("php/request.php/recherche?mondu=" + marque_onduleur + "&mpan=" + marque_panneaux + "&dep=" + departement + "")
 
     let res = await response.json();
@@ -73,29 +83,32 @@ async function get_form_all(event) {
     }
 }
 
-async function get_form_no_ondu(event) {
+async function get_form_none() {
 
 }
 
-async function get_form_no_pan(event) {
+async function get_form_no_pan_dep(marque_ondu) {
 
 }
 
-async function get_form_no_dep(event) {
+async function get_form_no_ondu_dep(marque_pan) {
 
 }
 
-async function get_form_no_ondu_pan(event) {
+async function get_form_no_ondu_pan(departement) {
 
 }
 
-async function get_form_no_ondu_dep(event) {
+async function get_form_no_ondu(marque_pan, departement) {
 
 }
 
-async function get_form_no_pan_dep(event) {
+async function get_form_no_pan(marque_ondu, departement) {
 
 }
 
+async function get_form_no_dep(marque_ondu, marque_pan) {
+
+}
 
 select_recherche();

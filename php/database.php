@@ -199,37 +199,14 @@ function dbRequestSelectCarte($db) // renvoie toutes les annees et 20 departemen
           'nom_departement' => string 'Is├¿re' (length=9)*/
 }
 
-function dbRequestPing($db, $lat, $long)
-{
-  /*localité et puissance du panneau*/
-  try {
-    $request = 'SELECT ville.localite, installation.puissance_crete FROM installation 
-    INNER JOIN ville ON installation.code_INSEE = ville.code_INSEE
-    WHERE installation.lat=:lat AND installation.lon=:long;';
-    $statement = $db->prepare($request);
-    $statement->bindParam(':lat', $lat, PDO::PARAM_STR);
-    $statement->bindParam(':long', $long, PDO::PARAM_STR);
-    $statement->execute();
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-  } catch (PDOException $exception) {
-    error_log('Request error: ' . $exception->getMessage());
-    return false;
-  }
-  return $result;/*
-array (size=425)
-0 => 
-array (size=1)
-'marque' => string '3A Energies' (length=11)*/
-}
-
 function dbRequestPos($db, $annee, $dep)
 /*Request pour la carte  */
 {
   try {
-    $request = 'SELECT lat,lon FROM installation 
+    $request = 'SELECT lat, lon, puissance_crete AS puissance, ville.localite AS localite FROM installation 
     RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
-    RIGHT JOIN departement ON ville.id_dep = departement.id_dep;';
-    $request .= 'WHERE num_annee=:annee AND departement.numero=:dep;';
+    RIGHT JOIN departement ON ville.id_dep = departement.id_dep
+    WHERE num_annee=:annee AND departement.numero=:dep;';
     $statement = $db->prepare($request);
     $statement->bindParam(':annee', $annee, PDO::PARAM_INT);
     $statement->bindParam(':dep', $dep, PDO::PARAM_STR, 20);
@@ -243,7 +220,10 @@ function dbRequestPos($db, $annee, $dep)
   /*
   array (size=24389)
   0 => 
-    array (size=2)
+    array (size=4)
       'lat' => null
-      'lon' => null*/
+      'lon' => null
+      'puissance' => 1000
+      'localite' => 'Paris'
+      */
 }

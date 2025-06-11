@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>Carte</title>
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
-      <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
-     <style>#map { height: 600px; width: 100%; }</style>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <script defer src="js/carte.js"></script>
 </head>
-<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"> 
-    <a href="Accueil.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> 
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="Accueil.html"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <svg class="bi me-2" width="40" height="32" aria-hidden="true">
-            <use xlink:href="#bootstrap"></use></svg> 
-            <img src="img/dessin-noir-blanc-panneau-solaire-eclat-soleil-dessus_1134231-2540.avif" alt="" height="80px" width="80px"> 
-            <span class="fs-4">Joatthieu</span> </a> 
-            <ul class="nav nav-pills"> 
-                <li class="nav-item"><a href="Accueil.html" class="nav-link active" aria-current="page">Accueil</a></li> 
-                <li class="nav-item"><a href="Recherche.html" class="nav-link">Recherche</a></li> 
-                <li class="nav-item"><a href="Carte.html" class="nav-link">Carte</a></li> 
-            </ul> 
-        </header>
+            <use xlink:href="#bootstrap"></use>
+        </svg>
+        <img src="img/dessin-noir-blanc-panneau-solaire-eclat-soleil-dessus_1134231-2540.avif" alt="" height="80px"
+            width="80px">
+        <span class="fs-4">Joatthieu</span> </a>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="Accueil.html" class="nav-link active" aria-current="page">Accueil</a></li>
+        <li class="nav-item"><a href="Recherche.html" class="nav-link">Recherche</a></li>
+        <li class="nav-item"><a href="Carte.html" class="nav-link">Carte</a></li>
+    </ul>
+</header>
+
 <body>
     <div class="container" id="form_carte">
-         <h3>Formulaire recherche carte :</h3>
-         <br>
+        <h3>Formulaire recherche carte :</h3>
+        <br>
         <form>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Année d'installation ></span>
                 </div>
-                <select id="annee_select">
+                <select title="Année" id="annee_select">
                     <option value="0">--Année d'installation--</option>
                 </select>
             </div>
@@ -40,30 +53,29 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Département ></span>
                 </div>
-                <select id="departement_select">
+                <select title="Département" id="departement_select">
                     <option value="0">--Département--</option>
                 </select>
             </div>
             <br>
             <button type="submit" class="btn btn-success float-end" id="button">
-            <i class="fa fa-paper-plane"></i> Envoyer
-          </button></form>
-          <br><br>
-            
-
-
+                <i class="fa fa-paper-plane"></i> Envoyer
+            </button>
+        </form>
+        <br><br>
         </form>
         <br>
-     <div id="map"></div>
-     </div>
+        <div id="map"></div>
+    </div>
 
 </body>
-<footer class="py-3 my-4"> 
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3"> 
-        <li class="nav-item"><a href="Accueil.html" class="nav-link px-2 text-body-secondary">Accueil</a></li> 
-        <li class="nav-item"><a href="Recherche.html" class="nav-link px-2 text-body-secondary">Recherche</a></li> 
-        <li class="nav-item"><a href="Carte.html" class="nav-link px-2 text-body-secondary">Carte</a></li> 
-    </ul> 
-    <p class="text-center text-body-secondary">© LEPEL Joakim & TETE Matthieu CIR2</p> 
+<footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="Accueil.html" class="nav-link px-2 text-body-secondary">Accueil</a></li>
+        <li class="nav-item"><a href="Recherche.html" class="nav-link px-2 text-body-secondary">Recherche</a></li>
+        <li class="nav-item"><a href="Carte.html" class="nav-link px-2 text-body-secondary">Carte</a></li>
+    </ul>
+    <p class="text-center text-body-secondary">© LEPEL Joakim & TETE Matthieu CIR2</p>
 </footer>
+
 </html>

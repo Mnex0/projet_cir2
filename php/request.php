@@ -28,7 +28,9 @@ if ($requestRessource == "chart1") { // Nb d'installations par années
 elseif ($requestRessource == "chart2") { // Nb d'installations par région
   $data = dbRequestChart2($db);
 }//pas fait 
-elseif ($requestRessource == "carte") {
+elseif ($requestRessource == "carte" && $requestMethod == "GET") {
+  $annee = $_GET['annee'];
+  $dep = $_GET['dep'];
   $data = dbRequestPos($db, $annee, $dep);
 }
 elseif ($requestRessource == "statEnr") { // Nb statEnregistrement
@@ -48,9 +50,6 @@ elseif ($requestRessource == "selectRecherche") { // prendre 20 marque ondu, mar
 }
 elseif ($requestRessource == "selectCarte") { // prendre toutes les annees et 20 departements aléa
   $data = dbRequestSelectCarte($db);
-}
-elseif ($requestRessource == "ping") { // localité et puissance du panneau
-  $data = dbRequestPing($db, $lat, $long);
 }
 
 //Envoie les info

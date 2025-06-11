@@ -51,12 +51,23 @@ elseif ($requestRessource == "selectRecherche") { // prendre 20 marque ondu, mar
 elseif ($requestRessource == "selectCarte") { // prendre toutes les annees et 20 departements aléa
   $data = dbRequestSelectCarte($db);
 }
+elseif ($requestRessource == "recherche" && $requestMethod == 'GET') {
+  $mondu = $_GET['mondu'];
+  $mpan = $_GET['mpan'];
+  $dep = $_GET['dep'];
+  $data = dbRequestRecherche($db, $mondu, $mpan, $dep);
+}
 
 //Envoie les info
 
 if ($data != false) {
   header('HTTP/1.1 200 OK');
   echo json_encode($data);
-} else
+} 
+elseif ($requestRessource == "recherche") {
+  header('HTTP/1.1 200 OK');
+  echo json_encode($data);
+}
+else
   header('HTTP/1.1 400 Bad Request');
 exit;

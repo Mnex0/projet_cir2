@@ -227,3 +227,49 @@ function dbRequestPos($db, $annee, $dep)
       'localite' => 'Paris'
       */
 }
+
+function dbRequestRecherche($db, $m_ondu, $m_pan, $dep) {
+  try {
+    $request = 'SELECT id, num_mois AS mois, num_annee AS annee, nb_panneau, puissance_crete AS puissance, surface, puissance_crete, ville.localite AS localite FROM installation 
+    RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    RIGHT JOIN departement ON ville.id_dep = departement.id_dep
+    RIGHT JOIN modele_pan ON installation.modele_panneau = modele_pan.modele_panneau
+    RIGHT JOIN modele_ondu ON installation.modele_onduleur = modele_ondu.modele_onduleur
+    RIGHT JOIN marque_pan ON modele_pan.marque = marque_pan.marque
+    RIGHT JOIN marque_ondu ON modele_ondu.marque = marque_ondu.marque
+    WHERE marque_ondu.marque=:mondu AND marque_pan.marque=:mpan AND departement.numero=:dep;';
+    $statement = $db->prepare($request);
+    $statement->bindParam(':mondu', $m_ondu, PDO::PARAM_STR, 50);
+    $statement->bindParam(':mpan', $m_pan, PDO::PARAM_STR, 50);
+    $statement->bindParam(':dep', $dep, PDO::PARAM_STR, 50);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('Request error: ' . $exception->getMessage());
+    return false;
+  }
+  return $result;
+}
+/*
+function dbRequestDetails($db, $id) {
+  try {
+    $request = 'SELECT id, num_mois AS mois, num_annee AS annee, nb_panneau AS puissance, surface, puissance_crete, ville.localite AS localite FROM installation 
+    RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
+    RIGHT JOIN departement ON ville.id_dep = departement.id_dep
+    RIGHT JOIN modele_pan ON installation.modele_panneau = modele_pan.modele_panneau
+    RIGHT JOIN modele_ondu ON installation.modele_onduleur = modele_ondu.modele_onduleur
+    RIGHT JOIN marque_pan ON modele_pan.marque = marque_pan.marque
+    RIGHT JOIN marque_ondu ON modele_ondu.marque = marque_ondu.marque
+    WHERE marque_ondu.marque=:mondu AND marque_pan.marque=:mpan AND departement.numero=:dep;';
+    $statement = $db->prepare($request);
+    $statement->bindParam(':mondu', $m_ondu, PDO::PARAM_STR);
+    $statement->bindParam(':mpan', $m_pan, PDO::PARAM_STR);
+    $statement->bindParam(':dep', $dep, PDO::PARAM_STR);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $exception) {
+    error_log('Request error: ' . $exception->getMessage());
+    return false;
+  }
+  return $result;
+}*/

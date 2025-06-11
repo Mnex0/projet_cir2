@@ -1,8 +1,12 @@
 MDP ssh : Joatthieu
 
-Les fichier SQL "Safe" sont des versions fonctionnelles d'import de données, au cas où les dernières versions ne fonctionnent pas, les fichiers safe seront toujours à disposition.
+Ne sont pas disponibles :
+    - La partie back avec visualisation, ajout et modification de données
+    - Le graphique par région et par année
+    - La recherche d'installation sans champs précisé
 
-MCD : Vérifier les NULL, dans ville la clé localité
+Exemple d'import : 
+DROP DATABASE IF EXISTS projet_cir2;
 CREATE DATABASE projet_cir2
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_general_ci;

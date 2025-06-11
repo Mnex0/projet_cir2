@@ -34,25 +34,15 @@ async function get_elt_carte(event) {
     }
     let res = await response.json();
     for (let i = 0; i < res.length; i++) {
-        affiche_ping(res[i]['lat'], res[i]['lon'], res[i]['puissance'], res[i]['localite'])
+        affiche_ping(res[i]['id'], res[i]['lat'], res[i]['lon'], res[i]['puissance'], res[i]['localite'])
     }
 }
 
-async function affiche_ping(lat, lon, puissance, localite) {
+async function affiche_ping(id, lat, lon, puissance, localite) {
     /* affiche un marqueur a une lat et lon donnée */
     map.setView([lat, lon], 10);
     var marker = L.marker([lat, lon]).addTo(map);
-    marker.bindPopup("<p>Localité : " + localite + "</p><p>Puissance : " + puissance + "</p><a href='Details.html'>Détails de l'installation</a>");//A modifier
-
-    /*const response = await fetch('php/request.php/ping');
-    if (!response.ok)
-        displayErrors(response.status);
-    else
-     {
-       res=await response.json();
-       marker.bindPopup("<div class='container text-center'><div class='row row-cols-3'><div class='col' id='loc'>"+res[0]+"</div><div class='col' id='puissance'>"+res[1]+"</div><div class='col' id='details'><a href='Details.html' >Clique ici pour avoir les détails</a></div></div></div>");//A modifier
-  }*/
-
+    marker.bindPopup("<p>Localité : " + localite + "</p><p>Puissance : " + puissance + `</p><a href='Details.html?id=${id}'>Détails de l'installation</a>`);//A modifier
 }
 
 select_carte();

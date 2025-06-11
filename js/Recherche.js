@@ -1,6 +1,6 @@
 'use strict'
 
-document.getElementById('form_recherche').addEventListener('submit', get_form);
+document.getElementById('form_recherche').addEventListener('submit', call_form);
 document.getElementById("res").style.display = "none";
 
 async function select_recherche() {
@@ -76,7 +76,7 @@ async function get_form_all(marque_onduleur, marque_panneaux, departement) {
                 <div class='col' id='puissance_crete'>${puissance}</div>
                 <div class='col' id='localisation'>${loc}</div>
                 <div class='col' id='details'>
-                    <a href='Details.html' >Détails id ${res[i]['id']}</a>
+                    <a href='Details.html?id=${res[i]['id']}' >Détails id ${res[i]['id']}</a>
                 </div>
             </div>`
         }
@@ -84,31 +84,31 @@ async function get_form_all(marque_onduleur, marque_panneaux, departement) {
 }
 
 async function get_form_none() {
-
+    let a;
 }
 
 async function get_form_no_pan_dep(marque_ondu) {
-
+    let a;
 }
 
 async function get_form_no_ondu_dep(marque_pan) {
-
+    let a;
 }
 
 async function get_form_no_ondu_pan(departement) {
-
+    let a;
 }
 
 async function get_form_no_ondu(marque_pan, departement) {
-
+    let a;
 }
 
 async function get_form_no_pan(marque_ondu, departement) {
-
+    let a;
 }
 
 async function get_form_no_dep(marque_ondu, marque_pan) {
-
+    let a;
 }
 
 select_recherche();

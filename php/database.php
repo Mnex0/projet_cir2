@@ -203,7 +203,7 @@ function dbRequestPos($db, $annee, $dep)
 /*Request pour la carte  */
 {
   try {
-    $request = 'SELECT lat, lon, puissance_crete AS puissance, ville.localite AS localite FROM installation 
+    $request = 'SELECT id, lat, lon, puissance_crete AS puissance, ville.localite AS localite FROM installation 
     RIGHT JOIN ville ON installation.code_INSEE = ville.code_INSEE 
     RIGHT JOIN departement ON ville.id_dep = departement.id_dep
     WHERE num_annee=:annee AND departement.numero=:dep;';
